@@ -1,39 +1,48 @@
-export default function Navbar() {
+import { Navbar } from 'react-bulma-components';
+
+export default function CustomNavbar() {
    return (
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-         <div className="navbar-brand">
-            <h1 className="navbar-item" >
-               CWProject
-            </h1>
-
-            <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-               <span aria-hidden="true"></span>
-               <span aria-hidden="true"></span>
-               <span aria-hidden="true"></span>
-            </a>
-         </div>
-
-         <div id="navbarBasicExample" className="navbar-menu">
-            <div className="navbar-start">
-               <a className="navbar-item">
-                  Home
-               </a>
-            </div>
-
-            <div className="navbar-end">
-               <div className="navbar-item">
-                  <div className="buttons">
-                     <a className="button is-primary">
-                        <strong>Sign up</strong>
-                     </a>
-                     <a className="button is-light">
-                        Log in
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </nav>
-
+      <Navbar>
+         <Navbar.Brand>
+            <Navbar.Item href="#">
+               <img
+                  alt="Bulma: a modern CSS framework based on Flexbox"
+                  height="28"
+                  src="https://bulma.io/images/bulma-logo.png"
+                  width="112"
+               />
+            </Navbar.Item>
+            <Navbar.Burger />
+         </Navbar.Brand>
+         <Navbar.Menu>
+            <Navbar.Container>
+               <Navbar.Item href="#">
+                  <Navbar.Link>
+                     First
+                  </Navbar.Link>
+                  <Navbar.Dropdown>
+                     <Navbar.Item href="#">
+                        Subitem 1
+                     </Navbar.Item>
+                     <Navbar.Item href="#">
+                        Subitem 2
+                     </Navbar.Item>
+                     <Navbar.Divider />
+                     <Navbar.Item href="#">
+                        After divider
+                     </Navbar.Item>
+                  </Navbar.Dropdown>
+               </Navbar.Item>
+               <Navbar.Item href="#">
+                  Second
+               </Navbar.Item>
+            </Navbar.Container>
+            <Navbar.Container align="end">
+               <Navbar.Item href="#">
+                  At the end
+               </Navbar.Item>
+            </Navbar.Container>
+         </Navbar.Menu>
+      </Navbar>
    )
 }
