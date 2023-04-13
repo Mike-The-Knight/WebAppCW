@@ -5,7 +5,7 @@ from django.contrib import messages
 
 # Create your views here.
 def account(request):
-    return render(request, 'members/index.html', {})
+    return render(request, 'members/index.html', {'title': 'Account'})
 
 def signup(request):
     if request.method == "POST":
@@ -26,7 +26,7 @@ def signup(request):
 
         return redirect('signin')
     else:
-        return render(request, 'members/signup.html', {})
+        return render(request, 'members/signup.html', {'title': 'Sign up'})
 
     
 
@@ -45,7 +45,7 @@ def signin(request):
             return redirect("account")
 
     else:
-        return render(request, 'members/signin.html', {})
+        return render(request, 'members/signin.html', {'title': 'Sign in'})
 
 def signout(request):
     logout(request)
