@@ -12,9 +12,18 @@
     </head>
     <body>
 
-        <h3> Welcome to Homepage</h3>
+        <h2> Welcome to Homepage</h2>
 
         <button type="submit"><a href="/members/account">Account</a></button>
+
+        <h2>User Feed</h2>
+
+        {% for post in posts %}
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <p>{{ post.author }}</p>
+            <p>{{ post.date_posted }}</p>
+        {% endfor %}
 
         <script src="" async defer></script>
     </body>
