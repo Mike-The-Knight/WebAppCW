@@ -5,7 +5,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Authentication</title>
+        {% if title %}
+            <title>MealMate - {{ title }}</title>
+        {% else %}
+            <title>MealMate</title>
+        {% endif %}
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -20,9 +24,8 @@
 
         {% for post in posts %}
             <h3>{{ post.title }}</h3>
+            <p>By {{ post.author }} on {{ post.date_posted }}</p>
             <p>{{ post.content }}</p>
-            <p>{{ post.author }}</p>
-            <p>{{ post.date_posted }}</p>
         {% endfor %}
 
         <script src="" async defer></script>
