@@ -39,7 +39,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "You have successfully logged in")
-            return render(request, "members/index.html", {'fname': user.first_name})
+            return render(request, "website/home.html", {'fname': user.first_name})
         else:
             messages.error(request, "Incorrect username or password")
             return redirect("account")
@@ -50,4 +50,4 @@ def signin(request):
 def signout(request):
     logout(request)
     messages.success(request, "Logged out Successfully!")
-    return redirect("index")
+    return redirect("home")
