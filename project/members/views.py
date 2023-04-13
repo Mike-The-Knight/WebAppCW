@@ -28,9 +28,25 @@ def signup(request):
     else:
         return render(request, 'members/signup.html', {'title': 'Sign up'})
 
-    
+posts = [
+{
+    'author': 'Michael',
+    'title': "Michael's First Post",
+    'content': 'I am a student at the University of Surrey and I am studying Computer Science.',
+    'date_posted': 'April 13, 2023'
+},
+{
+    'author': 'Nishanth',
+    'title': "Nishanth's First Post",
+    'content': 'I am a teacher at the University of Surrey and I am teaching Computer Science.',
+    'date_posted': 'January 12, 2023'
+},
+]
 
 def signin(request):
+    context = {
+        'posts': posts
+    }
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -39,7 +55,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "You have successfully logged in")
-            return render(request, "website/home.html", {'fname': user.first_name})
+            return render(request, "website/home.html", context)
         else:
             messages.error(request, "Incorrect username or password")
             return redirect("account")
