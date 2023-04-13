@@ -4,13 +4,13 @@ posts = [
     {
         'author': 'Michael',
         'title': "Michael's First Blog Post",
-        'content': 'First post content',
+        'content': 'I am a student at the University of Surrey and I am studying Computer Science.',
         'date_posted': 'April 13, 2023'
     },
     {
-        'author': 'Thomas',
-        'title': "Thomas' First Blog Post",
-        'content': 'First post content',
+        'author': 'Nishanth',
+        'title': "Nishanth's First Blog Post",
+        'content': 'I am a teacher at the University of Surrey and I am teaching Computer Science.',
         'date_posted': 'January 12, 2023'
     },
 ]
