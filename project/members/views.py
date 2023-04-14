@@ -42,6 +42,3 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged out Successfully!")
     return redirect("home")
-
-def profile(request):
-    return render(request, 'members/profile.html', {'title': 'Profile'})

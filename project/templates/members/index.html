@@ -1,21 +1,13 @@
 {% extends "members/base.html" %}
 {% block content %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        <strong>Message:</strong> {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+      <!-- FORM HERE -->
     </div>
-    {% endfor %}
-    <h3> Welcome to accounts</h3>
-
-    {% if user.is_authenticated %}
-        <h3>Hello {{ fname }}</h3>
-        <h4>You're successfully logged in.</h4>
-        <button type="submit"><a href="account/signout">Sign out</a></button>
-    {% else %}
-        <button type="submit"><a href="account/signup">Sign up</a></button>
-        <button type="submit"><a href="account/signin">Sign in</a></button>
-    {% endif %}
-{% endblock %}
+{% endblock content %}
