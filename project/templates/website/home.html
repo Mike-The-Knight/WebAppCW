@@ -4,15 +4,32 @@
 
     <h2>User Feed</h2>
 
-    {% for post in posts %}
+    {% for meal in Meals %}
+        <h3>Meals</h3>
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ post.author }}</a>
-                    <small class="text-muted">{{ post.date_posted }}</small>
+                    <a class="mr-2" href="#">{{ meal.author }}</a>
+                    <small class="text-muted">{{ meal.date_posted }}</small>
                 </div>
-                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-                <p class="article-content">{{ post.content }}</p>
+                <h2><a class="article-title" href="#">{{ meal.title }}</a></h2>
+                <p class="article-content">{{ meal.content }}</p>
+                <p class="article-content">{{ meal.ingrediants }}</p>
+            </div>
+        </article>
+    {% endfor %}
+    {% for recipe in Recipes %}
+        <h3>Recipes</h3>
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ recipe.author }}</a>
+                    <small class="text-muted">{{ recipe.date_posted }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
+                <p class="article-content">{{ recipe.content }}</p>
+                <p class="article-content">{{ recipe.ingrediants }}</p>
+                <p class="article-content">{{ recipe.instructions }}</p>
             </div>
         </article>
     {% endfor %}
