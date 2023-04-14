@@ -28,11 +28,18 @@
                 <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="/">Home</a>
+                    <a class="nav-item nav-link" href="/about">About Us</a>
                   </div>
                   <!-- Navbar Right Side -->
                   <div class="navbar-nav">
                     <a class="nav-item nav-link" href="/members/account">Account</a>
-                    <a class="nav-item nav-link" href="/about">About Us</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="/members/account/profile">Profile</a>
+                        <a class="nav-item nav-link" href="/members/account/signout">Sign out</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="/members/account/signup">Register</a>
+                        <a class="nav-item nav-link" href="/members/account/signin">Sign in</a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
