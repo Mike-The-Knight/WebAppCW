@@ -31,11 +31,18 @@ class RecipeDetailView(DetailView):
 class MealCreateView(CreateView):
     model = Meal
     fields = ['title', 'description', 'ingrediants']
-
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class RecipeCreateView(CreateView):
     model = Recipe
     fields = ['title', 'description', 'ingrediants', 'instructions']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class MealUpdateView(UpdateView):
     model = Meal
