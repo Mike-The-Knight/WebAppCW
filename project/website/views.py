@@ -50,13 +50,25 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class MealUpdateView(UpdateView):
-    model = Meal
-    fields = ['title', 'content']
+class MealUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/members/account/signin'
 
-class RecipeUpdateView(UpdateView):
+    model = Meal
+    fields = ['title', 'description', 'ingrediants']
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/members/account/signin/'
+
     model = Recipe
-    fields = ['title', 'content']
+    fields = ['title', 'description', 'ingrediants', 'instructions']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class MealDeleteView(DeleteView):
     model = Meal
