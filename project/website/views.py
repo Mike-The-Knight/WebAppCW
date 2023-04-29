@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Meal, Recipe
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 # Create your views here.
 def home(request):
     return render(request, 'website/home.html', {'title': 'Home'})
@@ -28,7 +30,9 @@ class MealDetailView(DetailView):
 class RecipeDetailView(DetailView):
     model = Recipe
 
-class MealCreateView(CreateView):
+class MealCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/members/account/signin'
+
     model = Meal
     fields = ['title', 'description', 'ingrediants']
     
@@ -36,7 +40,9 @@ class MealCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class RecipeCreateView(CreateView):
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/members/account/signin/'
+
     model = Recipe
     fields = ['title', 'description', 'ingrediants', 'instructions']
 
