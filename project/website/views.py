@@ -30,11 +30,12 @@ class RecipeDetailView(DetailView):
 
 class MealCreateView(CreateView):
     model = Meal
-    fields = ['title', 'content']
+    fields = ['title', 'description', 'ingrediants']
+
 
 class RecipeCreateView(CreateView):
     model = Recipe
-    fields = ['title', 'content']
+    fields = ['title', 'description', 'ingrediants', 'instructions']
 
 class MealUpdateView(UpdateView):
     model = Meal
