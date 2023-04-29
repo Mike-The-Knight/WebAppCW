@@ -50,7 +50,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class MealUpdateView(LoginRequiredMixin, UpdateView):
+class MealUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/members/account/signin'
 
     model = Meal
@@ -60,7 +60,7 @@ class MealUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/members/account/signin/'
 
     model = Recipe
