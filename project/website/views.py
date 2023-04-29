@@ -3,25 +3,22 @@ from .models import Meal, Recipe
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 # Create your views here.
 def home(request):
-    context = {
-        'meals': Meal.objects.all(),
-        'recipes': Recipe.objects.all(),
-    }
-    return render(request, 'website/home.html', context)
+    return render(request, 'website/home.html', {'title': 'Home'})
 
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
+
 # Class views for Meals and Recipes
 class MealListView(ListView):
     model = Meal
-    template_name = 'website/home.html'
+    template_name = 'website/meals.html'
     context_object_name = 'meals'
     ordering = ['-date_posted']
 
 class RecipeListView(ListView):
     model = Recipe
-    template_name = 'website/home.html'
+    template_name = 'website/recipes.html'
     context_object_name = 'recipes'
     ordering = ['-date_posted']
 
