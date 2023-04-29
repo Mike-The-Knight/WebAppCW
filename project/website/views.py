@@ -1,3 +1,4 @@
+from typing import Optional
 from django.shortcuts import render
 from .models import Meal, Recipe
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -55,10 +56,16 @@ class MealUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     model = Meal
     fields = ['title', 'description', 'ingrediants']
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/members/account/signin/'
@@ -69,6 +76,12 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
 
 class MealDeleteView(DeleteView):
     model = Meal
