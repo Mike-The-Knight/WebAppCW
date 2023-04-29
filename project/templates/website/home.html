@@ -1,22 +1,37 @@
-<!DOCTYPE html>
+{% extends "website/base.html" %}
+{% block content %}
+    <h2> Welcome to Homepage</h2>
 
-<html>
+    <h2>User Feed</h2>
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Authentication</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-
-        <h3> Welcome to Homepage</h3>
-
-        <button type="submit"><a href="/members/account">Account</a></button>
-
-        <script src="" async defer></script>
-    </body>
-
-</html>
+    <h3>Meals</h3>
+    {% for meal in meals %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ meal.author }}</a>
+                    <small class="text-muted">{{ meal.date_posted | date:"F d Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ meal.title }}</a></h2>
+                <p class="article-content">{{ meal.content }}</p>
+                <p class="article-content">{{ meal.ingrediants }}</p>
+            </div>
+        </article>
+    {% endfor %}
+    
+    <h3>Recipes</h3>
+    {% for recipe in recipes %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ recipe.author }}</a>
+                    <small class="text-muted">{{ recipe.date_posted | date:"F d Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
+                <p class="article-content">{{ recipe.content }}</p>
+                <p class="article-content">{{ recipe.ingrediants }}</p>
+                <p class="article-content">{{ recipe.instructions }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock %}
