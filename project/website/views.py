@@ -83,11 +83,23 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
-class MealDeleteView(DeleteView):
+class MealDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Meal
     success_url = '/'
 
-class RecipeDeleteView(DeleteView):
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
+
+class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
     success_url = '/'
+
+    def test_func(self):
+        recipe = self.get_object()
+        if self.request.user == recipe.author:
+            return True
+        return False
 
