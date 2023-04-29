@@ -20,10 +20,17 @@ urlpatterns = [
     # paths for home page and about page
     path('', views.home, name="home"),
     path('about', views.about, name="about"),
-    # paths for meals and recipes
+    # paths for viewing meals and recipes
     path('meals', views.MealListView.as_view(), name="meals"),
     path('recipes', views.RecipeListView.as_view(), name="recipes"),
     path('meal/<int:pk>/', views.MealDetailView.as_view(), name="meal-detail"),
     path('recipe/<int:pk>/', views.RecipeDetailView.as_view(), name="recipe-detail"),
-    
+    # paths for creating and deleting meals and recipes
+    path('meal/create/', views.MealCreate.as_view(), name="meal-create"),
+    path('meal/<int:pk>/delete/', views.MealDelete.as_view(), name="meal-delete"),
+    path('recipe/create/', views.RecipeCreate.as_view(), name="recipe-create"),
+    path('recipe/<int:pk>/delete/', views.RecipeDelete.as_view(), name="recipe-delete"),
+    # paths for updating meals and recipes
+    path('meal/<int:pk>/update/', views.MealUpdate.as_view(), name="meal-update"),
+    path('recipe/<int:pk>/update/', views.RecipeUpdate.as_view(), name="recipe-update"),    
 ]
