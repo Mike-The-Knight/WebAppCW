@@ -18,14 +18,14 @@ class MealListView(ListView):
     template_name = 'website/meals.html'
     context_object_name = 'meals'
     ordering = ['-date_posted']
-    paginate_by = 4
+    paginate_by = 3
 
 class RecipeListView(ListView):
     model = Recipe
     template_name = 'website/recipes.html'
     context_object_name = 'recipes'
     ordering = ['-date_posted']
-    paginate_by = 4
+    paginate_by = 3
 
 class MealDetailView(DetailView):
     model = Meal
