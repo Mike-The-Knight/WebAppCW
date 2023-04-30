@@ -12,8 +12,11 @@
                     <small class="text-muted">{{ recipe.date_posted | date:"F d Y" }}</small>
                 </div>
                 <h2><a class="article-title" href="{% url 'recipe-detail' recipe.id %}">{{ recipe.title }}</a></h2>
+                <h3>Description:</h3>
                 <p class="article-content">{{ recipe.description }}</p>
+                <h3>Ingrediants:</h3>
                 <p class="article-content">{{ recipe.ingrediants }}</p>
+                <h3>Instructions:</h3>
                 <p class="article-content">{{ recipe.instructions }}</p>
             </div>
         </article>
