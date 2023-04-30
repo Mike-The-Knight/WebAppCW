@@ -26,4 +26,7 @@ urlpatterns = [
     path('post/create/', views.PostCreateView.as_view(), name="post-create"),
     path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name="post-update"),
     path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name="post-delete"),
+
+    # Paths for viewing posts by a specific user
+    path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
 ]
