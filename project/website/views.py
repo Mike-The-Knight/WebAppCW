@@ -7,7 +7,4 @@ def home(request):
         'meals': Meal.objects.all(),
         'recipes': Recipe.objects.all(),
     }
-    return render(request, 'website/home.html', context)
-
-def about(request):
-    return render(request, 'website/about.html', {'title': 'About'})
+    return render(request, "index.html", context)
