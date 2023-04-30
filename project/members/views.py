@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 # Create your views here.
 def account(request):
-    return render(request, 'members/index.html', {'title': 'Account'})
+    return render(request, 'members/profile.html', {'title': 'Account'})
 
 def signup(request):
     if request.method == 'POST':
@@ -42,3 +42,13 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged out Successfully!")
     return redirect("home")
+
+
+@login_required
+def profile(request):
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {'u_form': u_form, 'p_form': p_form}
+
+    return render(request, 'members/profile.html', context)
+
