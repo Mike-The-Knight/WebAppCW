@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('website.urls')),
     path('members/', include('members.urls')),
+    path('global/', include('chat.urls')),
 ]
 
 if settings.DEBUG:
