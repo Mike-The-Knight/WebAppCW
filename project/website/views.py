@@ -12,7 +12,8 @@ def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
 
-# Class views for Meals and Recipes
+## Class views for Meals and Recipes
+# List views
 class MealListView(ListView):
     model = Meal
     template_name = 'website/meals.html'
@@ -27,12 +28,14 @@ class RecipeListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 2
 
+# Detail views
 class MealDetailView(DetailView):
     model = Meal
 
 class RecipeDetailView(DetailView):
     model = Recipe
 
+# Create views
 class MealCreateView(LoginRequiredMixin, CreateView):
     login_url = '/members/account/signin'
 
@@ -53,6 +56,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+# Update views
 class MealUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/members/account/signin'
 
@@ -85,6 +89,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
+# Delete views
 class MealDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Meal
     success_url = '/'
