@@ -4,19 +4,11 @@
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">
-          <p class="text-secondary">{{ user.username }}'s Profile</p>
+          <h2>{{ user.username }}</h2>
+          <p class="text-secondary">Username: {{ user.username }}</p>
+          <p class="text-secondary">Email: {{ user.email }}</p>
+          <a class="btn btn-outline-secondary" href="/members/account/update">Update Information</a>
         </div>
       </div>
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">User Information</legend>
-            {{ u_form.as_p }}
-            {{ p_form.as_p }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Yes, Update</button>
-        </div>
-      </form>
     </div>
 {% endblock content %}
