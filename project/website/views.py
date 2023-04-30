@@ -1,6 +1,6 @@
 from typing import Optional
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Like, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -20,6 +20,8 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 2
+
+
 
 class UserPostListView(ListView):
     model = Post

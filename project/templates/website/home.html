@@ -6,7 +6,7 @@
     {% for post in posts %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-        <div class="media-body">
+        < class="media-body">
             <div class="article-metadata">
                 <a class="mr-2">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
@@ -23,6 +23,13 @@
                 <h3>Instructions:</h3>
                 <p class="article-content">{{ post.instructions }}</p>
             {% endif %}
+            <!-- Display Likes, comments and reviews -->
+            <div class="article-metadata">
+                <a class="mr-2">Likes: {{ post.likes.count }}</a>
+                <a class="mr-2">Comments: {{ post.comments.count }}</a>
+                <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
+            </div>
+            
         </div>
     </article>
 {% endfor %}

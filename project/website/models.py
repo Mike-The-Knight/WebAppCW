@@ -23,7 +23,6 @@ class Post(models.Model):
     ingredients = models.TextField(blank=True)  # only 'recipe' posts will have this
     instructions = models.TextField(blank=True)  # only 'recipe' posts will have this
 
-
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
