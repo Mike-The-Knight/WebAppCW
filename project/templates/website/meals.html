@@ -12,7 +12,7 @@
                     <small class="text-muted">{{ meal.date_posted | date:"F d Y" }}</small>
                 </div>
                 <h2><a class="article-title" href="{% url 'meal-detail' meal.id %}">{{ meal.title }}</a></h2>
-                <p class="article-content">{{ meal.content }}</p>
+                <p class="article-content">{{ meal.description }}</p>
                 <p class="article-content">{{ meal.ingrediants }}</p>
             </div>
         </article>
