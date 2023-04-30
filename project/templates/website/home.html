@@ -12,10 +12,17 @@
                 <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <h3>Information:</h3>
-            <p class="article-content">{{ post.description }}</p>
-            <p class="article-content">{{ post.ingrediants }}</p>
-            <p class="article-content">{{ post.instructions }}</p>
+            {% if post.type == 'MEAL' %}
+                <h3>Description:</h3>
+                <p class="article-content">{{ post.description }}</p>
+            {% elif post.type == 'RECIPE' %}
+                <h3>Description:</h3>
+                <p class="article-content">{{ post.description }}</p>
+                <h3>Ingrediants:</h3>
+                <p class="article-content">{{ post.ingredients }}</p>
+                <h3>Instructions:</h3>
+                <p class="article-content">{{ post.instructions }}</p>
+            {% endif %}
         </div>
     </article>
 {% endfor %}

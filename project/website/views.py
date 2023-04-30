@@ -12,11 +12,11 @@ def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
 
-## Class views for Meals and Recipes
+## Class views for Posts
 # List views
 class PostListView(ListView):
     model = Post
-    template_name = 'website/home.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'website/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 2

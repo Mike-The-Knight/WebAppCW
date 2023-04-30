@@ -40,7 +40,7 @@ class Post(models.Model):
         return output
 
     def get_absolute_url(self):
-        return reverse('recipe-detail', kwargs={'pk': self.pk})
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
 #  Users can 'like' posts
 class Like(models.Model):
