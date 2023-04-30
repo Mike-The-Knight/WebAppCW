@@ -20,6 +20,9 @@ urlpatterns = [
     # paths for home page and about page
     path('', views.home, name="home"),
     path('about', views.about, name="about"),
+    
+    # consume api data
+    path('posts', views.all_posts, name="posts"),
 
     # paths for viewing meals and recipes
     path('meals', views.MealListView.as_view(), name="meals"),
