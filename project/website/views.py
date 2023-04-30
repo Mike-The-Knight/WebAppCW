@@ -4,6 +4,8 @@ from .models import Meal, Recipe
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+import requests
+
 # Create your views here.
 def home(request):
     return render(request, 'website/home.html', {'title': 'Home'})
@@ -11,6 +13,16 @@ def home(request):
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
+# get data from posts_service api
+# note - have to make sure we run them on the right ports and that they're connected to the same database
+def all_posts(request):
+    # pull data from posts_service api
+    response = requests.get('http://127.0.0.1:8000/posts/')
+    # convert response data into json
+    all_posts = response.json()
+    print(all_posts)
+    return  render(request, 'website/posts.html', {'title': 'Posts', 'posts':all_posts})
+    pass
 
 ## Class views for Meals and Recipes
 # List views
