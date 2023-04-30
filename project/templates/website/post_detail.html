@@ -10,10 +10,10 @@
                 <small class="text-muted">{{ object.date_posted | date:"F d Y" }}</small>
             </div>
             <h2 class="article-title">{{ object.title }}</h2>
-            <h3>Description:</h3>
+            <h3>Information:</h3>
             <p class="article-content">{{ object.description }}</p>
-            <h3>Ingrediants:</h3>
             <p class="article-content">{{ object.ingrediants }}</p>
+            <p class="article-content">{{ object.instructions }}</p>
         </div>
     </article>
 {% endblock %}
