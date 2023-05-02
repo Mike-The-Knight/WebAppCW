@@ -54,20 +54,21 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+                    <div class="col-md-4">
+                        <div class="content-section">
+                            <h3>MealMate Navigator</h3>
+                            {% if user.is_authenticated %}
+                                <a class="nav-item nav-link" href="/post/create">Create Post</a>
+                                <a class="nav-item nav-link" href="{% url 'user-posts' user.username %}">View my posts</a>
+                            {% else %}
+                                <a class="nav-item nav-link" href="/members/account/signin">Sign in to use the Navigator</a>
+                            {% endif %}
+                        </div>
+                    </div>
                     {% block content %}
                     {% endblock %}
                 </div>
-                <div class="col-md-4">
-                    <div class="content-section">
-                        <h3>MealMate Navigator</h3>
-                        {% if user.is_authenticated %}
-                            <a class="nav-item nav-link" href="/post/create">Create Post</a>
-                            <a class="nav-item nav-link" href="{% url 'user-posts' user.username %}">View my posts</a>
-                        {% else %}
-                            <a class="nav-item nav-link" href="/members/account/signin">Sign in to use the Navigator</a>
-                        {% endif %}
-                    </div>
-                </div>
+
             </div>
         </main>
 

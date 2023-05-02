@@ -65,7 +65,6 @@ class PostListView(ListView):
         # call the base implementation to get a context
         context = super().get_context_data(**kwargs)
         # get post likes and add to context
-        # context["likes"] = Like.objects.all()
         likes_dict = dict()
         for post in self.object_list:
             likes_dict[post.id] = len(Like.objects.filter(post=post))
@@ -84,6 +83,17 @@ class UserPostListView(ListView):
         user = self.request.user
         # get the posts by that user
         return Post.objects.filter(author=user).order_by('-date_posted')
+
+    # get dictionary of posts to their like numbers
+    def get_context_data(self, **kwargs):
+        # call the base implementation to get a context
+        context = super().get_context_data(**kwargs)
+        # get post likes and add to context
+        likes_dict = dict()
+        for post in self.object_list:
+            likes_dict[post.id] = len(Like.objects.filter(post=post))
+        context["like_numbers"] = likes_dict
+        return context
 
 
 class PostDetailView(DetailView):
