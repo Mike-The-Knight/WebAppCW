@@ -6,7 +6,7 @@
     {% for post in posts %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-        < class="media-body">
+        <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
@@ -18,7 +18,7 @@
             {% elif post.type == 'RECIPE' %}
                 <h3>Description:</h3>
                 <p class="article-content">{{ post.description }}</p>
-                <h3>Ingrediants:</h3>
+                <h3>Ingredients:</h3>
                 <p class="article-content">{{ post.ingredients }}</p>
                 <h3>Instructions:</h3>
                 <p class="article-content">{{ post.instructions }}</p>

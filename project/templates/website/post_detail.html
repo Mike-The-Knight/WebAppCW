@@ -16,11 +16,30 @@
             {% elif object.type == 'RECIPE' %}
                 <h3>Description:</h3>
                 <p class="article-content">{{ object.description }}</p>
-                <h3>Ingrediants:</h3>
+                <h3>Ingredients:</h3>
                 <p class="article-content">{{ object.ingredients }}</p>
                 <h3>Instructions:</h3>
                 <p class="article-content">{{ object.instructions }}</p>
             {% endif %}
+            <p>Likes: {{ likes|length }} </p>
+            {% if liked %}
+            <!-- unlike the post -->
+                <form action="/unlike" method="POST" id="unlikeform">
+                    {% csrf_token %}
+                    <input type="number" id="unlikepostid" name="postid" value="{{ object.id }}" hidden>
+                    <input type="number" id="unlikeuserid" name="userid" value="{{ user.id }}" hidden>
+                    <button type="submit" form="unlikeform" value="unlikepost">Unlike post</button>
+                </form>
+            {% else %}
+                <!-- like the post -->
+                <form action="/like" method="POST" id="likeform">
+                    {% csrf_token %}
+                    <input type="number" id="postid" name="postid" value="{{ object.id }}" hidden>
+                    <input type="number" id="userid" name="userid" value="{{ user.id }}" hidden>
+                    <button type="submit" form="likeform" value="likepost">Like post</button>
+                </form>
+            {% endif %}
+
         </div>
     </article>
 {% endblock %}
