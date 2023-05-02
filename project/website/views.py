@@ -18,6 +18,19 @@ def home(request):
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
+# list users liked posts
+def userLikes(request):
+    # list of like objects (user+post)
+    likes = Like.objects.filter(user=request.user)
+    # convert to list of posts
+    # this is where an SQL join would come in
+
+
+    return render(request, 'website/user_likes.html', {
+        'title': 'My likes',
+
+    })
+
 
 # like button
 def like(request):

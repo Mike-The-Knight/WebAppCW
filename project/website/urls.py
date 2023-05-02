@@ -26,6 +26,9 @@ urlpatterns = [
     # path for unliking post
     path('unlike', views.unlike, name="unlike"),
 
+    # view all posts liked by a user
+    path('likes', views.userLikes, name="user_likes"),
+
     # Paths for viewing, updating, creating and deleting posts
     path('post/<int:pk>/', views.PostDetailView.as_view(), name="post-detail"),
     path('post/create/', views.PostCreateView.as_view(), name="post-create"),
