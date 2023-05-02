@@ -1,6 +1,6 @@
 from typing import Optional
 from django.shortcuts import render
-from .models import Meal, Recipe
+from .models import Post, Like, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -12,101 +12,67 @@ def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
 
-## Class views for Meals and Recipes
+## Class views for Posts
 # List views
-class MealListView(ListView):
-    model = Meal
-    template_name = 'website/meals.html'
-    context_object_name = 'meals'
+class PostListView(ListView):
+    model = Post
+    template_name = 'website/home.html'
+    context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 2
 
-class RecipeListView(ListView):
-    model = Recipe
-    template_name = 'website/recipes.html'
-    context_object_name = 'recipes'
-    ordering = ['-date_posted']
+
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'website/user_posts.html'
+    context_object_name = 'posts'
     paginate_by = 2
 
-# Detail views
-class MealDetailView(DetailView):
-    model = Meal
+    def get_queryset(self):
+        # get the user
+        user = self.request.user
+        # get the posts by that user
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
-class RecipeDetailView(DetailView):
-    model = Recipe
+class PostDetailView(DetailView):
+    model = Post
 
-# Create views
-class MealCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/members/account/signin'
-
-    model = Meal
-    fields = ['title', 'description', 'ingrediants']
-    
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-class RecipeCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     login_url = '/members/account/signin/'
 
-    model = Recipe
-    fields = ['title', 'description', 'ingrediants', 'instructions']
+    model = Post
+    fields = ['title', 'type', 'description', 'ingredients', 'instructions']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    login_url = '/members/account/signin/'
 
-# Update views
-class MealUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    login_url = '/members/account/signin'
-
-    model = Meal
-    fields = ['title', 'description', 'ingrediants']
+    model = Post
+    fields = ['title', 'description', 'ingredients', 'instructions']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
     def test_func(self):
-        recipe = self.get_object()
-        if self.request.user == recipe.author:
+        post = self.get_object()
+        if self.request.user == post.author:
             return True
         return False
-
-class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     login_url = '/members/account/signin/'
 
-    model = Recipe
-    fields = ['title', 'description', 'ingrediants', 'instructions']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        recipe = self.get_object()
-        if self.request.user == recipe.author:
-            return True
-        return False
-
-# Delete views
-class MealDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Meal
+    model = Post
     success_url = '/'
 
     def test_func(self):
-        recipe = self.get_object()
-        if self.request.user == recipe.author:
-            return True
-        return False
-
-class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Recipe
-    success_url = '/'
-
-    def test_func(self):
-        recipe = self.get_object()
-        if self.request.user == recipe.author:
+        post = self.get_object()
+        if self.request.user == post.author:
             return True
         return False
 
