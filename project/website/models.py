@@ -24,6 +24,7 @@ class Post(models.Model):
     instructions = models.TextField(blank=True)  # only 'recipe' posts will have this
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, blank=True, related_name='likes')
 
     def __str__(self):
         return self.title
