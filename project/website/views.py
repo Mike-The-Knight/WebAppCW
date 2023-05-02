@@ -9,13 +9,17 @@ from .models import Post, Like, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
 # Create your views here.
 def home(request):
     return render(request, 'website/home.html', {'title': 'Home'})
 
+
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
+
+# like button
 def like(request):
     if request.method == "POST":
         form = LikeForm(request.POST)
@@ -30,6 +34,8 @@ def like(request):
             return HttpResponseRedirect('/post/' + str(postid))
     return HttpResponseRedirect('/')
 
+
+# unlike button
 def unlike(request):
     if request.method == "POST":
         form = LikeForm(request.POST)
@@ -44,6 +50,7 @@ def unlike(request):
             return HttpResponseRedirect('/post/' + str(postid))
     return HttpResponseRedirect('/')
 
+
 ## Class views for Posts
 # List views
 class PostListView(ListView):
@@ -52,6 +59,19 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 2
+
+    # get dictionary of posts to their like numbers
+    def get_context_data(self, **kwargs):
+        # call the base implementation to get a context
+        context = super().get_context_data(**kwargs)
+        # get post likes and add to context
+        # context["likes"] = Like.objects.all()
+        likes_dict = dict()
+        for post in self.object_list:
+            likes_dict[post.id] = len(Like.objects.filter(post=post))
+        context["like_numbers"] = likes_dict
+        return context
+
 
 class UserPostListView(ListView):
     model = Post
@@ -65,8 +85,10 @@ class UserPostListView(ListView):
         # get the posts by that user
         return Post.objects.filter(author=user).order_by('-date_posted')
 
+
 class PostDetailView(DetailView):
     model = Post
+
     def get_context_data(self, **kwargs):
         # call the base implementation to get a context
         context = super().get_context_data(**kwargs)
@@ -76,8 +98,8 @@ class PostDetailView(DetailView):
             context["liked"] = True
         else:
             context["liked"] = False
-
         return context
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     login_url = '/members/account/signin/'
@@ -88,7 +110,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-    
+
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/members/account/signin/'
 
@@ -104,7 +127,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == post.author:
             return True
         return False
-    
+
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     login_url = '/members/account/signin/'
 
