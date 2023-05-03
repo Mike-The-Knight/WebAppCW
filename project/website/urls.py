@@ -18,5 +18,5 @@ from website.views import home
 
 urlpatterns = [
     path("", home, name="home"),
-    re_path(r".*", home)
+    #re_path(r".*", home)
 ]
