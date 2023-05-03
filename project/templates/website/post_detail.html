@@ -21,26 +21,33 @@
                 <h3>Instructions:</h3>
                 <p class="article-content">{{ object.instructions }}</p>
             {% endif %}
-            <p>Likes: {{ likes|length }} </p>
-            {% if user.username %}
-                {% if liked %}
-                <!-- unlike the post -->
-                    <form action="/unlike" method="POST" id="unlikeform">
-                        {% csrf_token %}
-                        <input type="number" id="unlikepostid" name="postid" value="{{ object.id }}" hidden>
-                        <input type="number" id="unlikeuserid" name="userid" value="{{ user.id }}" hidden>
-                        <button type="submit" form="unlikeform" value="unlikepost">Unlike post</button>
-                    </form>
-                {% else %}
-                    <!-- like the post -->
-                    <form action="/like" method="POST" id="likeform">
-                        {% csrf_token %}
-                        <input type="number" id="postid" name="postid" value="{{ object.id }}" hidden>
-                        <input type="number" id="userid" name="userid" value="{{ user.id }}" hidden>
-                        <button type="submit" form="likeform" value="likepost">Like post</button>
-                    </form>
-                {% endif %}
-            {% endif %}
+
+            <form method="POST" action="{% url 'like' post.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+
+                <!-- like button is made blue if the user has liked the post -->
+                <style>
+                    i {
+                        color: grey;
+                    }
+                </style>
+
+                {% for like in post.likes.all %}
+                    {% if like == request.user %}
+                        <style>
+                            i {
+                                color: blue;
+                            }
+                        </style>
+                    {%endif%}
+                {%endfor%}
+
+                <button type="submit">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    {{ post.likes.all.count }}
+                </button>
+            </form>
 
         </div>
     </article>
