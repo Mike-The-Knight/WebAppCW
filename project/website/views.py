@@ -45,8 +45,10 @@ class AddLike(LoginRequiredMixin, View):
 class AddComment(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
-        comment = Comment(author=request.user, post=post, text=request.POST['text'])
+        comment = Comment(author=request.user, text=request.POST['text'])
         comment.save()
+        post.comments.add(comment)
+        post.save()
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
@@ -77,12 +79,6 @@ class UserPostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-    def get_context_data(self, **kwargs):
-        # call the base implementation to get a context
-        context = super().get_context_data(**kwargs)
-        # get post comments and add to context
-        context["comments"] = Comment.objects.filter(post=self.object.id)
-        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
