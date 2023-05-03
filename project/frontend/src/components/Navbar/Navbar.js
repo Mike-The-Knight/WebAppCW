@@ -1,48 +1,69 @@
 import { Navbar } from 'react-bulma-components';
+import { Button } from 'react-bulma-components';
+import "./navbar.css"
 
 export default function CustomNavbar() {
    return (
-      <Navbar>
-         <Navbar.Brand>
-            <Navbar.Item href="#">
+      // <Navbar color="danger">
+      //    <Navbar.Brand>
+      //       <Navbar.Item href="/">
+      //          <img
+      //             src="../../../media/meal_mate_white.png"
+      //             width={200}
+      //          />
+      //       </Navbar.Item>
+      //       <Navbar.Burger />
+      //    </Navbar.Brand>
+      //    <Navbar.Menu>
+      //       <Navbar.Container>
+      //          <Navbar.Item href="/home">
+      //             Home
+      //          </Navbar.Item>
+      //          <Navbar.Item href="/about">
+      //             About Us
+      //          </Navbar.Item>
+      //       </Navbar.Container>
+      //       <Navbar.Container align="end">
+      //          <Navbar.Item href="/signin">
+      //             <Button color="white-bis">Sign in</Button>
+      //          </Navbar.Item>
+      //       </Navbar.Container>
+      //    </Navbar.Menu>
+      // </Navbar>
+
+
+      <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+         <div class="navbar-brand">
+            <a class="navbar-item" href="/">
                <img
-                  alt="Bulma: a modern CSS framework based on Flexbox"
-                  height="28"
-                  src="https://bulma.io/images/bulma-logo.png"
-                  width="112"
+                  src="../../../media/meal_mate_white.png"
+                  width={200}
                />
-            </Navbar.Item>
-            <Navbar.Burger />
-         </Navbar.Brand>
-         <Navbar.Menu>
-            <Navbar.Container>
-               <Navbar.Item href="#">
-                  <Navbar.Link>
-                     First
-                  </Navbar.Link>
-                  <Navbar.Dropdown>
-                     <Navbar.Item href="#">
-                        Subitem 1
-                     </Navbar.Item>
-                     <Navbar.Item href="#">
-                        Subitem 2
-                     </Navbar.Item>
-                     <Navbar.Divider />
-                     <Navbar.Item href="#">
-                        After divider
-                     </Navbar.Item>
-                  </Navbar.Dropdown>
-               </Navbar.Item>
-               <Navbar.Item href="#">
-                  Second
-               </Navbar.Item>
-            </Navbar.Container>
-            <Navbar.Container align="end">
-               <Navbar.Item href="#">
-                  At the end
-               </Navbar.Item>
-            </Navbar.Container>
-         </Navbar.Menu>
-      </Navbar>
+            </a>
+         </div>
+
+         <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+               <a class="navbar-item" href="/">
+                  Home
+               </a>
+               <a class="navbar-item" href="/about">
+                  About Us
+               </a>
+            </div>
+            <div class="navbar-end">
+               <div class="navbar-item">
+                  <div class="buttons">
+                     <a class="button is-danger" href="/signup">
+                        <strong>Sign up</strong>
+                     </a>
+                     <a class="button is-light">
+                        Log in
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </nav>
    )
 }
