@@ -27,7 +27,9 @@
             <div class="article-metadata">
                 <a class="mr-2">Likes: {{ post.likes.count }}</a>
                 <a class="mr-2">Comments: {{ post.comments.count }}</a>
-                <a class="mr-2">Reviews: </a>
+                {% if post.type == 'RECIPE' %}
+                    <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
+                {% endif %}
             </div>
             
         </div>

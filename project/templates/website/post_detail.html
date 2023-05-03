@@ -23,45 +23,48 @@
             {% endif %}
 
             <!-- Likes -->
-            <form method="POST" action="{% url 'like' post.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'like' post.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
 
-                <!-- like button is made blue if the user has liked the post -->
-                <style>
-                    i {
-                        color: grey;
-                    }
-                </style>
+                    <!-- like button is made blue if the user has liked the post -->
+                    {% for like in post.likes.all %}
+                        {% if like == request.user %}
+                            <style>
+                                i {
+                                    color: blue;
+                                }
+                            </style>
+                        {%endif%}
+                    {%endfor%}
 
-                {% for like in post.likes.all %}
-                    {% if like == request.user %}
-                        <style>
-                            i {
-                                color: blue;
-                            }
-                        </style>
-                    {%endif%}
-                {%endfor%}
-
-                <button type="submit">
-                    <i class="fa-solid fa-thumbs-up"></i>
-                    {{ post.likes.all.count }}
-                </button>
-            </form>
+                    <button type="submit">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        {{ post.likes.all.count }}
+                    </button>
+                </form>
+            {% else %}
+            <p><i class="fa-solid fa-thumbs-up"></i> {{ post.likes.all.count }}</p>
+            <p>Sign in to like posts</p>
+            {% endif %}
 
             <!-- Comments -->
             <div class="comments">
                 <h3>Comments ({{ post.comments.count }})</h3>
-                <h4> Add comment: </h4>
-                 <form method="POST" action="{% url 'comment' post.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <input type="text" name="text">
-                    <button type="submit">
-                        Post comment
-                    </button>
-                </form>
+                {% if user.is_authenticated %}
+                    <h4> Add comment: </h4>
+                     <form method="POST" action="{% url 'comment' post.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type="text" name="text">
+                        <button type="submit">
+                            Post comment
+                        </button>
+                    </form>
+                {% else %}
+                <p>Sign in to post comments</p>
+                {% endif %}
                 <br>
                 {% for comment in post.comments.all %}
                     <div class="comment">
@@ -75,32 +78,36 @@
             {% if object.type == "RECIPE" %}
                 <div class="reviews">
                     <h3>Reviews ({{ object.reviews.count }})</h3>
-                    <h4> Add review: </h4>
-                    <!-- post new review -->
-                     <form method="POST" action="{% url 'review' post.pk %}">
-                         {% csrf_token %}
-                         <input type="hidden" name="next" value="{{ request.path }}">
-                         <div class="row">
-                             <label for="title">Title</label>
-                             <br>
-                             <input type="text" id="title" name="title">
-                         </div>
-                         <div class="row">
-                             <label for="title">Text</label>
-                             <br>
-                            <input type="text" id="text" name="text">
-                         </div>
-                         <div class="row">
-                             <label for="title">Rating</label>
-                             <br>
-                             <input type="range" id="rating" name="rating" min="0" max="5">
-                         </div>
-                         <div class="row">
-                             <button type="submit">
-                                 Post review
-                             </button>
-                         </div>
-                    </form>
+                    {% if user.is_authenticated %}
+                        <h4> Add review: </h4>
+                        <!-- post new review -->
+                         <form method="POST" action="{% url 'review' post.pk %}">
+                             {% csrf_token %}
+                             <input type="hidden" name="next" value="{{ request.path }}">
+                             <div class="row">
+                                 <label for="title">Title</label>
+                                 <br>
+                                 <input type="text" id="title" name="title">
+                             </div>
+                             <div class="row">
+                                 <label for="title">Text</label>
+                                 <br>
+                                <input type="text" id="text" name="text">
+                             </div>
+                             <div class="row">
+                                 <label for="title">Rating</label>
+                                 <br>
+                                 <input type="range" id="rating" name="rating" min="0" max="5">
+                             </div>
+                             <div class="row">
+                                 <button type="submit">
+                                     Post review
+                                 </button>
+                             </div>
+                        </form>
+                    {% else %}
+                    <p>Sign in to post reviews</p>
+                    {% endif %}
                     <br>
 
                     <!-- display reviews -->
