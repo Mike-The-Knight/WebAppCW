@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
-from .models import Post, Comment
+from .models import Post, Comment, Review
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -52,6 +52,15 @@ class AddComment(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+class AddReview(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        review = Review(author=request.user, title=request.POST['title'], rating=request.POST['rating'], text=request.POST['text'])
+        review.save()
+        post.reviews.add(review)
+        post.save()
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
 
 ## Class views for Posts
 # List views

@@ -13,6 +13,22 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+#  Reviews have a title, text and a rating 0-5
+class Review(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateField(default=timezone.now)
+    title = models.CharField(max_length=150)
+    text = models.TextField()
+    rating = models.IntegerField(
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ]
+    )
+
+    def __str__(self):
+        return self.title
+
 class Post(models.Model):
 
     # 2 post types
@@ -34,6 +50,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
     comments = models.ManyToManyField(Comment, blank=True, related_name='comments')
+    reviews = models.ManyToManyField(Review, blank=True, related_name='reviews')
 
     def __str__(self):
         return self.title
@@ -54,19 +71,3 @@ class Post(models.Model):
 
 
 
-#  Reviews have a title, text and a rating 0-5
-class Review(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    date_posted = models.DateField()
-    title = models.CharField(max_length=150)
-    text = models.TextField()
-    rating = models.IntegerField(
-        validators=[
-            MaxValueValidator(5),
-            MinValueValidator(1)
-        ]
-    )
-
-    def __str__(self):
-        return self.title

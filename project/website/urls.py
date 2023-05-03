@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-from .views import AddLike, AddComment
+from .views import AddLike, AddComment, AddReview
 
 urlpatterns = [
     # paths for home page and about page
@@ -38,5 +38,8 @@ urlpatterns = [
     path('post/<int:pk>/like', AddLike.as_view(), name='like'),
 
     # post new comments
-    path('post/<int:pk>/comment', AddComment.as_view(), name='comment')
+    path('post/<int:pk>/comment', AddComment.as_view(), name='comment'),
+
+    # post new reviews
+    path('post/<int:pk>/review', AddReview.as_view(), name='review')
 ]

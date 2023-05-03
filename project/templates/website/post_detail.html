@@ -22,6 +22,7 @@
                 <p class="article-content">{{ object.instructions }}</p>
             {% endif %}
 
+            <!-- Likes -->
             <form method="POST" action="{% url 'like' post.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
@@ -49,23 +50,71 @@
                 </button>
             </form>
 
-            <h3> Add comment: </h3>
-             <form method="POST" action="{% url 'comment' post.pk %}">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <input type="text" name="text">
-                <button type="submit">
-                    Post comment
-                </button>
-            </form>
+            <!-- Comments -->
+            <div class="comments">
+                <h3>Comments ({{ post.comments.count }})</h3>
+                <h4> Add comment: </h4>
+                 <form method="POST" action="{% url 'comment' post.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type="text" name="text">
+                    <button type="submit">
+                        Post comment
+                    </button>
+                </form>
+                <br>
+                {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <small> {{ comment.author }} | {{ comment.date_posted }} </small>
+                        <p> {{ comment }} </p>
+                    </div>
+                {% endfor %}
+            </div>
 
-            <h3>Comments ({{ post.comments.count }})</h3>
-            {% for comment in post.comments.all %}
-                <div class="comment">
-                    <small> {{ comment.author }} | {{ comment.date_posted }} </small>
-                    <p> {{ comment }} </p>
+            <!-- Reviews if recipe -->
+            {% if object.type == "RECIPE" %}
+                <div class="reviews">
+                    <h3>Reviews ({{ object.reviews.count }})</h3>
+                    <h4> Add review: </h4>
+                    <!-- post new review -->
+                     <form method="POST" action="{% url 'review' post.pk %}">
+                         {% csrf_token %}
+                         <input type="hidden" name="next" value="{{ request.path }}">
+                         <div class="row">
+                             <label for="title">Title</label>
+                             <br>
+                             <input type="text" id="title" name="title">
+                         </div>
+                         <div class="row">
+                             <label for="title">Text</label>
+                             <br>
+                            <input type="text" id="text" name="text">
+                         </div>
+                         <div class="row">
+                             <label for="title">Rating</label>
+                             <br>
+                             <input type="range" id="rating" name="rating" min="0" max="5">
+                         </div>
+                         <div class="row">
+                             <button type="submit">
+                                 Post review
+                             </button>
+                         </div>
+                    </form>
+                    <br>
+
+                    <!-- display reviews -->
+                    {% for review in post.reviews.all %}
+                    <div class="review">
+                        <strong> {{ review.title }} </strong>
+                        <small> {{ review.author }} | {{ review.date_posted }} </small>
+                        <p> {{ review.rating }}/5 stars</p>
+                        <p> {{ review.text }} </p>
+                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
+            {%endif%}
+
         </div>
     </article>
 {% endblock %}
