@@ -20,13 +20,7 @@ def about(request):
 
 # list users liked posts
 def userLikes(request):
-
-
-    return render(request, 'website/user_likes.html', {
-        'title': 'My likes',
-
-    })
-
+    return render(request, 'website/user_likes.html', {'title': 'Your liked posts'})
 
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):

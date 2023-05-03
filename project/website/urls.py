@@ -22,9 +22,6 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name="home"),
     path('about', views.about, name="about"),
 
-    # view all posts liked by a user
-    path('likes', views.userLikes, name="user_likes"),
-
     # like/unlike post
     path('post/<int:pk>/like', AddLike.as_view(), name='like'),
 
@@ -36,4 +33,7 @@ urlpatterns = [
 
     # Paths for viewing posts by a specific user
     path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
+
+    # View all posts liked by a user
+    path('likes', views.userLikes, name="user-likes")
 ]

@@ -2,7 +2,7 @@
 {% block content %}
     <h2> My liked posts </h2>
 
-    {% for post in posts %}
+    {% for post in request.user.likes.all %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
         <div class="media-body">
