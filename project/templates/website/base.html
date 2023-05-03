@@ -16,6 +16,11 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+
+         <!-- font awesome for icons, uses installed app -->
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/regular.css' %}" rel="stylesheet" type="text/css">
     </head>
     <body>
         <header class="site-header">
@@ -23,7 +28,7 @@
               <div class="container">
                 <a class="navbar-brand mr-4" href="/">MealMate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
@@ -54,18 +59,23 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+                    <div class="col-md-4">
+                        <div class="content-section">
+                            <h3>MealMate Navigator</h3>
+                            <a class="nav-item nav-link" href="/">View all posts</a>
+                            {% if user.is_authenticated %}
+                                <a class="nav-item nav-link" href="/post/create">Create Post</a>
+                                <a class="nav-item nav-link" href="{% url 'user-posts' user.username %}">View my posts</a>
+                                <a class="nav-item nav-link" href="{% url 'user-likes' %}">View my liked posts</a>
+                            {% else %}
+                                <a class="nav-item nav-link" href="/members/account/signin">Sign in to use the Navigator</a>
+                            {% endif %}
+                        </div>
+                    </div>
                     {% block content %}
                     {% endblock %}
                 </div>
-                <div class="col-md-4">
-                    <div class="content-section">
-                        <h3>MealMate Navigator</h3>
-                        <a class="nav-item nav-link" href="/meals">Latest Meals</a>
-                        <a class="nav-item nav-link" href="/recipes">Latest Recipes</a>
-                        <a class="nav-item nav-link" href="/meal/create">Post Meal</a>
-                        <a class="nav-item nav-link" href="/recipe/create">Post Recipe</a>
-                    </div>
-                </div>
+
             </div>
         </main>
 

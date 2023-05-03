@@ -1,8 +1,8 @@
 {% extends "website/base.html" %}
 {% block content %}
-    <h2> Welcome to Homepage</h2>
 
-    <h3>User Feed</h3>
+    <h2> Your Posts </h2>
+
     {% for post in posts %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -31,7 +31,6 @@
                     <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
                 {% endif %}
             </div>
-            
         </div>
     </article>
 {% endfor %}
