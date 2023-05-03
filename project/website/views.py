@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
-from .models import Post, Like, Comment
+from .models import Post, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -20,10 +20,6 @@ def about(request):
 
 # list users liked posts
 def userLikes(request):
-    # list of like objects (user+post)
-    likes = Like.objects.filter(user=request.user)
-    # convert to list of posts
-    # this is where an SQL join would come in
 
 
     return render(request, 'website/user_likes.html', {
