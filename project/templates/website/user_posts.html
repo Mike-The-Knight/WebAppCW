@@ -25,11 +25,7 @@
             {% endif %}
             <!-- Display Likes, comments and reviews -->
             <div class="article-metadata">
-                {% for key, value in like_numbers.items %}
-                    {% if key == post.id %}
-                        <a class="mr-2">Likes: {{ value }} </a>
-                    {% endif %}
-                {% endfor %}
+                <a class="mr-2">Likes: {{ post.likes.count }}</a>
                 <a class="mr-2">Comments: </a>
                 {% if post.type == 'RECIPE' %}
                     <a class="mr-2">Reviews: </a>
