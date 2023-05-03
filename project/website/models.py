@@ -24,6 +24,7 @@ class Post(models.Model):
     instructions = models.TextField(blank=True)  # only 'recipe' posts will have this
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, blank=True, related_name='likes')
 
     def __str__(self):
         return self.title
@@ -41,17 +42,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
-
-#  Users can 'like' posts
-class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ["user", "post"]
-
-    def __str__(self):
-        return self.user.username + " LIKES " + self.post.title
 
 #  Comments only have a text field
 class Comment(models.Model):

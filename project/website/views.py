@@ -3,9 +3,9 @@ from typing import Optional
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.views import View
 
-from .forms import LikeForm
-from .models import Post, Like, Comment
+from .models import Post, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -20,10 +20,6 @@ def about(request):
 
 # list users liked posts
 def userLikes(request):
-    # list of like objects (user+post)
-    likes = Like.objects.filter(user=request.user)
-    # convert to list of posts
-    # this is where an SQL join would come in
 
 
     return render(request, 'website/user_likes.html', {
@@ -32,36 +28,26 @@ def userLikes(request):
     })
 
 
-# like button
-def like(request):
-    if request.method == "POST":
-        form = LikeForm(request.POST)
-        if form.is_valid():
-            # add like to DB
-            userid = form.cleaned_data["userid"]
-            postid = form.cleaned_data["postid"]
-            user = User.objects.get(id=userid)
-            post = Post.objects.get(id=postid)
-            new_like = Like(user=user, post=post)
-            new_like.save()
-            return HttpResponseRedirect('/post/' + str(postid))
-    return HttpResponseRedirect('/')
+class AddLike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+
+        already_liked = False
+        for like in post.likes.all():
+            if like == request.user:
+                already_liked = True
+                break
+        if not already_liked:
+            post.likes.add(request.user)
+
+        if already_liked:
+            post.likes.remove(request.user)
 
 
-# unlike button
-def unlike(request):
-    if request.method == "POST":
-        form = LikeForm(request.POST)
-        if form.is_valid():
-            # find like and remove from DB
-            userid = form.cleaned_data["userid"]
-            postid = form.cleaned_data["postid"]
-            user = User.objects.get(id=userid)
-            post = Post.objects.get(id=postid)
-            like_to_delete = Like.objects.filter(post=post).filter(user=user)
-            like_to_delete.delete()
-            return HttpResponseRedirect('/post/' + str(postid))
-    return HttpResponseRedirect('/')
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+
 
 
 ## Class views for Posts
@@ -72,17 +58,6 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 2
-
-    # get dictionary of posts to their like numbers
-    def get_context_data(self, **kwargs):
-        # call the base implementation to get a context
-        context = super().get_context_data(**kwargs)
-        # get post likes and add to context
-        likes_dict = dict()
-        for post in self.object_list:
-            likes_dict[post.id] = len(Like.objects.filter(post=post))
-        context["like_numbers"] = likes_dict
-        return context
 
 
 class UserPostListView(ListView):
@@ -97,31 +72,9 @@ class UserPostListView(ListView):
         # get the posts by that user
         return Post.objects.filter(author=user).order_by('-date_posted')
 
-    # get dictionary of posts to their like numbers
-    def get_context_data(self, **kwargs):
-        # call the base implementation to get a context
-        context = super().get_context_data(**kwargs)
-        # get post likes and add to context
-        likes_dict = dict()
-        for post in self.object_list:
-            likes_dict[post.id] = len(Like.objects.filter(post=post))
-        context["like_numbers"] = likes_dict
-        return context
-
 
 class PostDetailView(DetailView):
     model = Post
-
-    def get_context_data(self, **kwargs):
-        # call the base implementation to get a context
-        context = super().get_context_data(**kwargs)
-        # get post likes and add to context
-        context["likes"] = Like.objects.filter(post=self.object.id)
-        if((Like.objects.filter(post=self.object.id)).filter(user=self.request.user.id)):
-            context["liked"] = True
-        else:
-            context["liked"] = False
-        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
