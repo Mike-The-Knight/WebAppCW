@@ -49,6 +49,23 @@
                 </button>
             </form>
 
+            <h3> Add comment: </h3>
+             <form method="POST" action="{% url 'comment' post.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="text" name="text">
+                <button type="submit">
+                    Post comment
+                </button>
+            </form>
+
+            <h3>Comments</h3>
+            {% for comment in comments %}
+                <div class="comment">
+                    <small> {{ comment.author }} | {{ comment.date_posted }} </small>
+                    <p> {{ comment }} </p>
+                </div>
+            {% endfor %}
         </div>
     </article>
 {% endblock %}

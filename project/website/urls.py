@@ -15,15 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-from .views import AddLike
+from .views import AddLike, AddComment
 
 urlpatterns = [
     # paths for home page and about page
     path('', views.PostListView.as_view(), name="home"),
     path('about', views.about, name="about"),
-
-    # like/unlike post
-    path('post/<int:pk>/like', AddLike.as_view(), name='like'),
 
     # Paths for viewing, updating, creating and deleting posts
     path('post/<int:pk>/', views.PostDetailView.as_view(), name="post-detail"),
@@ -35,5 +32,11 @@ urlpatterns = [
     path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
 
     # View all posts liked by a user
-    path('likes', views.userLikes, name="user-likes")
+    path('likes', views.userLikes, name="user-likes"),
+
+    # like/unlike post
+    path('post/<int:pk>/like', AddLike.as_view(), name='like'),
+
+    # post new comments
+    path('post/<int:pk>/comment', AddComment.as_view(), name='comment')
 ]
