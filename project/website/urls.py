@@ -13,10 +13,33 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, re_path
-from website.views import home
+from django.urls import path
+from . import views
+from .views import AddLike, AddComment, AddReview
 
 urlpatterns = [
-    path("", home, name="home"),
-    #re_path(r".*", home)
+    # paths for home page and about page
+    path('', views.PostListView.as_view(), name="home"),
+    path('about', views.about, name="about"),
+
+    # Paths for viewing, updating, creating and deleting posts
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name="post-detail"),
+    path('post/create/', views.PostCreateView.as_view(), name="post-create"),
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name="post-update"),
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name="post-delete"),
+
+    # Paths for viewing posts by a specific user
+    path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
+
+    # View all posts liked by a user
+    path('likes', views.userLikes, name="user-likes"),
+
+    # like/unlike post
+    path('post/<int:pk>/like', AddLike.as_view(), name='like'),
+
+    # post new comments
+    path('post/<int:pk>/comment', AddComment.as_view(), name='comment'),
+
+    # post new reviews
+    path('post/<int:pk>/review', AddReview.as_view(), name='review')
 ]
