@@ -19,8 +19,8 @@ from .views import AddLike, AddComment, AddReview
 
 urlpatterns = [
     # paths for home page and about page
-    #path('', include('frontend.urls')),
-    path('', views.PostListView.as_view(), name="home"),
+    path('', include('frontend.urls')),
+    #path('', views.PostListView.as_view(), name="home"),
     path('about', views.about, name="about"),
 
     # Paths for viewing, updating, creating and deleting posts
