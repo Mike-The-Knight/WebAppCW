@@ -2,7 +2,7 @@
 {% block content %}
     <div class="content-section">
       <div class="media">
-        <img class="rounded-circle account-img" src="{{ user_profile.profile.image.url }}">
+        <img class="rounded-circle account-img" src="{{ viewed_user.profile.image.url }}">
         <div class="media-body">
             <h2>{{ viewed_user.username }}</h2>
             <h3>Followers: {{ viewed_user.profile.followers.count }}</h3>

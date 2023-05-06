@@ -6,7 +6,7 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2">{{ object.author }}</a>
+                <a href="/members/{{post.author.id}}" class="mr-2">{{ object.author }}</a>
                 <small class="text-muted">{{ object.date_posted | date:"F d Y" }}</small>
             </div>
             <h2 class="article-title">{{ object.title }}</h2>
