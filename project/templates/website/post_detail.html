@@ -68,7 +68,7 @@
                 <br>
                 {% for comment in post.comments.all %}
                     <div class="comment">
-                        <small> {{ comment.author }} | {{ comment.date_posted }} </small>
+                        <small><a href="/members/{{comment.author.id}}">{{ comment.author }}</a> | {{ comment.date_posted }} </small>
                         <p> {{ comment }} </p>
                     </div>
                 {% endfor %}
@@ -114,7 +114,7 @@
                     {% for review in post.reviews.all %}
                     <div class="review">
                         <strong> {{ review.title }} </strong>
-                        <small> {{ review.author }} | {{ review.date_posted }} </small>
+                        <small><a href="/members/{{review.author.id}}">{{ review.author }}</a> | {{ review.date_posted }} </small>
                         <p> {{ review.rating }}/5 stars</p>
                         <p> {{ review.text }} </p>
                     </div>
