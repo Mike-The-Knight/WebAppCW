@@ -1,6 +1,7 @@
 from typing import Optional
 
 from django.contrib.auth.models import User
+from django.db.models import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
@@ -19,8 +20,13 @@ def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
 # list users liked posts
-def userLikes(request):
+def user_likes(request):
     return render(request, 'website/user_likes.html', {'title': 'Your liked posts'})
+
+# lists posts by users the user is following
+def user_following(request):
+    posts = Post.objects.filter(author__profile__followers=request.user)
+    return render(request, 'website/user_following.html', {'title': 'Following', 'posts': posts})
 
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
