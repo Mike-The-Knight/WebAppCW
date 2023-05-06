@@ -1,6 +1,7 @@
 {% extends "website/base.html" %}
 {% block content %}
-    <h2>Home</h2>
+
+    <h2> View {{ author.username }}'s Posts </h2>
 
     {% for post in posts %}
     <article class="media content-section">
@@ -30,7 +31,6 @@
                     <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
                 {% endif %}
             </div>
-            
         </div>
     </article>
 {% endfor %}

@@ -28,6 +28,16 @@ def user_following(request):
     posts = Post.objects.filter(author__profile__followers=request.user)
     return render(request, 'website/user_following.html', {'title': 'Following', 'posts': posts})
 
+
+# lists posts by user with a particular id
+def user_posts_id(request, pk):
+    if User.objects.filter(pk=pk).exists():
+        posts = Post.objects.filter(author__id=pk)
+        author = User.objects.get(pk=pk)
+        return render(request, 'website/user_posts_id.html', {'title': author.username + "'s posts", 'posts': posts, 'author': author })
+    else:
+        return HttpResponseRedirect('/')
+
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
