@@ -10,10 +10,6 @@ import { BrowserRouter as Router, Routes, Route, Link, Redirect } from "react-ro
 
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       [<CustomNavbar />,
