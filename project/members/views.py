@@ -85,3 +85,24 @@ class UserViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all().order_by('user')
     serializer_class = ProfileSerializer
+
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+
+@api_view(['GET'])
+def list_users(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_user(request):
+    username = request.data.get('username')
+    email = request.data.get('email')
+    password = request.data.get('password')
+    
+    user = User.objects.create_user(username=username, email=email, password=password)
+    user.save()
+    
+    return Response(status=status.HTTP_201_CREATED)

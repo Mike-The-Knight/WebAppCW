@@ -23,13 +23,15 @@ router.register(r'users', views.UserViewSet)
 router.register(r'profiles', views.ProfileViewSet)
 
 urlpatterns = [
-    path('account', views.account, name='account'),
-    path('account/update', views.update_account, name='update_account'),
-    path('account/signup', views.signup, name="signup"),
-    path('account/signin', views.signin, name="signin"),
-    path('account/signout', views.signout, name="signout"),
+    # path('account', views.account, name='account'),
+    # path('account/update', views.update_account, name='update_account'),
+    # path('account/signup', views.signup, name="signup"),
+    # path('account/signin', views.signin, name="signin"),
+    # path('account/signout', views.signout, name="signout"),
     # REST API ROUTES
+    #path('api/users', views.list_users),
     path('api/', include(router.urls))
+
 ]
 
 
