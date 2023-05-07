@@ -9,7 +9,7 @@ export default function PostView() {
    const { id } = useParams();
 
    useEffect(() => {
-      axios.get(`/api/posts/${id}/`).then((res) => {
+      axios.get(`/api/main/posts/${id}/`).then((res) => {
          setPost(res.data);
       });
    }, [id]);

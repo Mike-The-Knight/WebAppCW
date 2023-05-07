@@ -19,7 +19,7 @@ export default class Home extends Component {
 
    fetchPosts = () => {
       axios
-         .get("/api/posts/")
+         .get("/api/main/posts/")
          .then((response) => {
             this.setState({
                posts: response.data,
