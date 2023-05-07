@@ -3,9 +3,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 # Create your views here.
+
+
+
 def account(request):
     return render(request, 'members/profile.html', {'title': 'Account'})
 
@@ -68,3 +73,15 @@ def update_account(request):
     }
 
     return render(request, 'members/profile_update.html', context)
+
+# REST API VIEWS
+from .models import Profile
+from .serializers import UserSerializer, ProfileSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('username')
+    serializer_class = UserSerializer
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all().order_by('user')
+    serializer_class = ProfileSerializer
