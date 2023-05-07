@@ -1,11 +1,19 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
+
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.views import View
 
 # Create your views here.
+from .models import ProfilePicture
+
+
 def account(request):
     return render(request, 'members/profile.html', {'title': 'Account'})
 
@@ -64,7 +72,47 @@ def update_account(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'images': ProfilePicture.objects.all()
     }
 
     return render(request, 'members/profile_update.html', context)
+
+class Follow(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        user_to_follow = User.objects.get(pk=pk)
+        already_following = False
+
+        for followed_user in request.user.profile.following.all():
+            if followed_user == user_to_follow:
+                already_following = True
+                break
+
+        if not already_following:
+            request.user.profile.following.add(user_to_follow)
+            user_to_follow.profile.followers.add(request.user)
+
+
+        if already_following:
+            request.user.profile.following.remove(user_to_follow)
+            user_to_follow.profile.followers.remove(request.user)
+
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class SetPicture(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        image = ProfilePicture.objects.get(pk=pk).image
+        user = User.objects.get(id=request.user.id)
+        user.profile.image = image
+        user.save()
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+
+
+def view_user(request, pk):
+    viewed_user = User.objects.get(pk=pk)
+    return render(request, 'members/user_detail.html', { 'title': 'View user profile', 'viewed_user': viewed_user })

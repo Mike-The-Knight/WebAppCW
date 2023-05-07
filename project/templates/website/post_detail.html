@@ -6,7 +6,7 @@
     <article class="media content-section">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2">{{ object.author }}</a>
+                <a href="/members/{{post.author.id}}" class="mr-2">{{ object.author }}</a>
                 <small class="text-muted">{{ object.date_posted | date:"F d Y" }}</small>
             </div>
             <h2 class="article-title">{{ object.title }}</h2>
@@ -68,7 +68,7 @@
                 <br>
                 {% for comment in post.comments.all %}
                     <div class="comment">
-                        <small> {{ comment.author }} | {{ comment.date_posted }} </small>
+                        <small><a href="/members/{{comment.author.id}}">{{ comment.author }}</a> | {{ comment.date_posted }} </small>
                         <p> {{ comment }} </p>
                     </div>
                 {% endfor %}
@@ -114,7 +114,7 @@
                     {% for review in post.reviews.all %}
                     <div class="review">
                         <strong> {{ review.title }} </strong>
-                        <small> {{ review.author }} | {{ review.date_posted }} </small>
+                        <small><a href="/members/{{review.author.id}}">{{ review.author }}</a> | {{ review.date_posted }} </small>
                         <p> {{ review.rating }}/5 stars</p>
                         <p> {{ review.text }} </p>
                     </div>
