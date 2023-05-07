@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: .
+    command: python /app/project/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+
+  db:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL2505
+      MYSQL_DATABASE: MealMateDB
+      MYSQL_USER: MichaelBAW
+      MYSQL_PASSWORD: MBAW2505
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  
+
+volumes:
+  mysql_data:
