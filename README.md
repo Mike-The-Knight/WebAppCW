@@ -10,6 +10,11 @@ docker build -t my-django-app .
 ```
 This will build the docker locally, you must have Docker Desktop running.
 
+Then create the database:
+```
+docker-compose run web python project/manage.py migrate
+```
+
 Then run:
 ```
 docker-compose up
