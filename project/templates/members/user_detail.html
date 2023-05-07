@@ -1,0 +1,42 @@
+{% extends "members/base.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ viewed_user.profile.image.url }}">
+        <div class="media-body">
+            <h2>{{ viewed_user.username }}</h2>
+            <h3>Followers: {{ viewed_user.profile.followers.count }}</h3>
+            <h3>Following: {{ viewed_user.profile.following.count }}</h3>
+
+
+            <!-- Friending -->
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'follow' viewed_user.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+
+                    <button id="follow" type="submit">
+                        Follow
+                    </button>
+
+                    <!-- turn to unfollow button if following them -->
+                    {% for following in user.profile.following.all %}
+                        {% if following == viewed_user %}
+                            <script>
+                                document.getElementById("follow").innerHTML = "Unfollow";
+                            </script>
+                        {%endif%}
+                    {%endfor%}
+
+
+                </form>
+            {% else %}
+                <p>You must sign in to follow users.</p>
+            {% endif %}
+
+            <h3><a href="{% url 'user-posts-id' viewed_user.id%}">View this user's posts</a></h3>
+
+        </div>
+      </div>
+    </div>
+{% endblock content %}

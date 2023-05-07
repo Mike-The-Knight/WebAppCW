@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from .views import Follow, SetPicture
 
 urlpatterns = [
     path('account', views.account, name='account'),
@@ -22,6 +23,15 @@ urlpatterns = [
     path('account/signup', views.signup, name="signup"),
     path('account/signin', views.signin, name="signin"),
     path('account/signout', views.signout, name="signout"),
+
+    # view a users profile page
+    path('<int:pk>/', views.view_user, name="view_user"),
+
+    # add/remove friends
+    path('<int:pk>/follow', Follow.as_view(), name='follow'),
+
+    # add/remove friends
+    path('setpicture/<int:pk>', SetPicture.as_view(), name='setpicture')
 ]
 
 

@@ -32,7 +32,13 @@ urlpatterns = [
     path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
 
     # View all posts liked by a user
-    path('likes', views.userLikes, name="user-likes"),
+    path('likes', views.user_likes, name="user-likes"),
+
+    # View all posts by the users the user follows
+    path('following', views.user_following, name="user-following"),
+
+    # View all posts by a particular user using their id
+    path('post/user/<int:pk>', views.user_posts_id, name="user-posts-id"),
 
     # like/unlike post
     path('post/<int:pk>/like', AddLike.as_view(), name='like'),
