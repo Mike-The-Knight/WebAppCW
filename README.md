@@ -12,6 +12,6 @@ This will build the docker locally, you must have Docker Desktop running.
 
 Then run:
 ```
-docker run -it -p 8000:8000 my-django-app
+docker-compose up
 ```
 This will start the app on your local host.
