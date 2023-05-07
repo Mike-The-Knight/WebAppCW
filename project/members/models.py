@@ -4,6 +4,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
 
+class ProfilePicture(models.Model):
+    image = models.ImageField(upload_to='profile_pics')
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -11,6 +18,7 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     followers = models.ManyToManyField(User, blank=True, related_name='followers')
     following = models.ManyToManyField(User, blank=True, related_name='following')
+
     def __str__(self):
         return self.user.username
     

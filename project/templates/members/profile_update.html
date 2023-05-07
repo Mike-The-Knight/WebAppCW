@@ -13,10 +13,30 @@
             <legend class="border-bottom mb-4">User Information</legend>
             {{ u_form.as_p }}
             {{ p_form.as_p }}
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Yes, Update</button>
+            </div>
         </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Yes, Update</button>
-        </div>
+
       </form>
+
+        <!--gallery-->
+          <h3>Or choose an image from the gallery:</h3>
+        <div class="gallery" style="display: flex; flex-direction: row;">
+            {% for image in images %}
+                <form method="POST" action="{% url 'setpicture' image.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+                        <button type="submit">
+                            <img style="width: 50px; height: 50px;" src="{{ image.image.url }}">
+                        </button>
+                </form>
+            {% endfor %}
+            </div>
+
+
+
+
     </div>
 {% endblock content %}

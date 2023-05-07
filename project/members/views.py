@@ -11,6 +11,9 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.views import View
 
 # Create your views here.
+from .models import ProfilePicture
+
+
 def account(request):
     return render(request, 'members/profile.html', {'title': 'Account'})
 
@@ -69,7 +72,8 @@ def update_account(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'images': ProfilePicture.objects.all()
     }
 
     return render(request, 'members/profile_update.html', context)
@@ -96,6 +100,17 @@ class Follow(LoginRequiredMixin, View):
 
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
+
+class SetPicture(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        image = ProfilePicture.objects.get(pk=pk).image
+        user = User.objects.get(id=request.user.id)
+        user.profile.image = image
+        user.save()
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
 
 
 def view_user(request, pk):
