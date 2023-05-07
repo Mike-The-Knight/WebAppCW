@@ -27,7 +27,7 @@ export default function CustomNavbar() {
                      <a class="button is-danger" href="/signup">
                         <strong>Sign up</strong>
                      </a>
-                     <a class="button is-light">
+                     <a class="button is-light" href="/signin">
                         Log in
                      </a>
                   </div>
