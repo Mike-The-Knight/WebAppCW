@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faComment } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 
 export const Post = ({ post }) => {
+   const navigate = useNavigate();
+
+   const handleClick = () => {
+      navigate(`/post/${post.id}`);
+   };
+
    return (
-      <div class="card mb-6 shadow-md is-cursor-pointer transform is-duration-300 hover-shadow-xl hover-translate-y">
+      <div class="card mb-6 shadow-md is-cursor-pointer transform is-duration-300 hover-shadow-xl hover-translate-y" onClick={handleClick}>
          <div class="card-content">
             <div class="media">
                <div class="media-left">

@@ -3,6 +3,8 @@ import HomePage from "../pages/home/Home"
 import SigninPage from "../pages/signin/Signin"
 import SignupPage from "../pages/signup/Signup"
 import AboutPage from "../pages/about/About"
+import PostView from "../pages/PostView/PostView"
+
 import CustomNavbar from "./Navbar/Navbar"
 import "../../node_modules/bulma/css/bulma.css";
 import { render } from "react-dom";
@@ -20,6 +22,7 @@ export default class App extends Component {
           <Route path='/about' element={<AboutPage />} />
           <Route path='/signin' element={<SigninPage />} />
           <Route path='/signup' element={<SignupPage />} />
+          <Route path="/post/:id" element={<PostView />} />
         </Routes>
       </Router>
       ]

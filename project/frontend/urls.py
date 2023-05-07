@@ -7,4 +7,5 @@ urlpatterns = [
     path('about', index),
     path('signin', index),
     path('signup', index),
+    path('post/<int:pk>/', index)
 ]
