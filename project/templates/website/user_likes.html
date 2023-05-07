@@ -10,6 +10,12 @@
                 <a href="/members/{{post.author.id}}" class="mr-2">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
             </div>
+            <!-- meal/recipe icon display -->
+            {% if post.type == 'MEAL' %}
+                <small><i class="fa-solid fa-utensils"></i> Meal</small>
+            {% elif post.type == 'RECIPE' %}
+                <small><i class="fa-solid fa-kitchen-set"></i> Recipe</small>
+            {% endif %}
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             {% if post.type == 'MEAL' %}
                 <h3>Description:</h3>
