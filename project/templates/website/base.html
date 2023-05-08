@@ -54,19 +54,19 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href>
+                            <a class="navbar-item" href="{% url 'user-posts' user.username %}">
                                 Posts
                             </a>
-                            <a class="navbar-item">
+                            <a class=" navbar-item" href="{% url 'user-likes' %}">
                                 Likes
                             </a>
-                            <a class="navbar-item">
+                            <a class="navbar-item" href="/members/account>
                                 View Account
                             </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                <strong>Sign out</strong>
-                            </a>
+                            <hr class=" navbar-divider">
+                                <a class="navbar-item" href="/members/account/signout">
+                                    <strong>Sign out</strong>
+                                </a>
                         </div>
                     </div>
                     {% else %}
