@@ -3,16 +3,23 @@ version: '3.8'
 services:
 
   web:
-    build: .
+    build: ./main_website
     command: python /app/project/manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - ./main_website:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
       - DATABASE_HOST=db
+
+  chat:
+    build: ./chat_microservice
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./chat_microservice:/app
 
   db:
     image: mysql:8.0.33
