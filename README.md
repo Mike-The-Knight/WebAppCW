@@ -6,7 +6,9 @@ Group 18 - Web App coursework
 ## Docker commands to run
 First run the following:
 ```
-docker build -t my-django-app .
+docker-compose build web
+
+docker-compose build chat
 ```
 This will build the docker locally, you must have Docker Desktop running.
 
