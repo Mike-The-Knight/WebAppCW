@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'chat.apps.chatConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 
 # Channels settings
-ASGI_APPLICATION = 'microservice_chat.routing.application'
+ASGI_APPLICATION = 'microservice_chat.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
