@@ -16,8 +16,9 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project files
-COPY globalchat /app
+COPY . /app
 
 # Expose the port your Django app runs on
 EXPOSE 8001
 
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]

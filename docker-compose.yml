@@ -20,7 +20,16 @@ services:
       - "8001:8001"
     volumes:
       - ./globalchat:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
 
+  redis:
+    image: "redis:6.2-alpine"
+    ports:
+      - "6379:6379"
+  
   db:
     image: mysql:8.0.33
     environment:

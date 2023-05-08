@@ -13,3 +13,5 @@ requests==2.29.0
 sqlparse==0.4.3
 tzdata==2022.7
 urllib3==1.26.15
+channels==3.0.4
+channels_redis==3.3.1
