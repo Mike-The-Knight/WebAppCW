@@ -88,7 +88,7 @@
             <div class="col-md-8">
                 {% if messages %}
                 {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
+                <div class="notification is-success m-6">
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -98,6 +98,16 @@
         </div>
 
     </main>
+    {% if not user.is_authenticated %}
+    <div class="section">
+        <section class="hero">
+            <div class="hero-body">
+                <p class="title is-1 has-text-centered">Welcome to Meal Mate!</p>
+                <p class="subtitle has-text-centered is-size-5 mb-1 mt-1">See what our users are posting</p>
+            </div>
+        </section>
+    </div>
+    {% endif %}
     {% block content %}
     {% endblock %}
     <script src="" async defer></script>

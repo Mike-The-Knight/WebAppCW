@@ -1,50 +1,73 @@
 {% extends "website/base.html" %}
 {% block content %}
-<h2>Home</h2>
 
-{% for post in posts %}
-<article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a href="/members/{{post.author.id}}" class="mr-2">{{ post.author }}</a>
-            <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
+<div class="columns is-centered">
+    <div class="column is-7">
+        {% for post in posts %}
+        <div class="card mb-6 shadow-md is-cursor-pointer" href="{% url 'post-detail' post.id %}">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="{{ post.author.profile.image.url }}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-3">
+                            {% if post.type == 'MEAL' %}
+                            <small><i class="fa-solid fa-utensils mr-2"></i></small>
+                            {% elif post.type == 'RECIPE' %}
+                            <small><i class="fa-solid fa-kitchen-set mr-2"></i></small>
+                            {% endif %}
+                            {{post.title}}
+                        </p>
+                        <p class="subtitle is-6">
+                            <a href="/members/{{post.author.id}}">
+                                @{{post.author.username}}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="mb-5">
+                        {{post.description}}
+                    </div>
+                    {% if post.ingredients %}
+                    <div>
+                        <div class="has-text-grey-dark has-text-weight-bold mb-2">
+                            Ingredients
+                        </div>
+                        <p class="mb-4">{{post.ingredients}}</p>
+                    </div>
+                    {% endif %}
+                    {% if post.instructions %}
+                    <div>
+                        <div class="has-text-grey-dark has-text-weight-bold mb-2">
+                            Method
+                        </div>
+                        <p>{{post.instructions}}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <p class="mb-2">
+                    <span style="margin-right: 10px">
+                        <time datetime="2016-1-1">{{post.date_posted}} •</time>
+                    </span>
+                    <span style="margin-right: 15px">
+                        <i class="fas fa-thumbs-up"></i>
+                        {{post.likes.length}}
+                    </span>
+                    <span>
+                        <i class="fas fa-comment"></i>
+                        {{post.comments.length}}
+                    </span>
+                </p>
+            </div>
         </div>
-
-        <!-- meal/recipe icon display -->
-        {% if post.type == 'MEAL' %}
-        <small><i class="fa-solid fa-utensils"></i> Meal</small>
-        {% elif post.type == 'RECIPE' %}
-        <small><i class="fa-solid fa-kitchen-set"></i> Recipe</small>
-        {% endif %}
-
-        <!-- post title -->
-        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-
-        <!-- info -->
-        {% if post.type == 'MEAL' %}
-        <h3>Description:</h3>
-        <p class="article-content">{{ post.description }}</p>
-        {% elif post.type == 'RECIPE' %}
-
-        <h3>Description:</h3>
-        <p class="article-content">{{ post.description }}</p>
-        <h3>Ingredients:</h3>
-        <p class="article-content">{{ post.ingredients }}</p>
-        <h3>Instructions:</h3>
-        <p class="article-content">{{ post.instructions }}</p>
-        {% endif %}
-        <!-- Display Likes, comments and reviews -->
-        <div class="article-metadata">
-            <a class="mr-2">Likes: {{ post.likes.count }}</a>
-            <a class="mr-2">Comments: {{ post.comments.count }}</a>
-            {% if post.type == 'RECIPE' %}
-            <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
-            {% endif %}
-        </div>
-
     </div>
-</article>
+</div>
 {% endfor %}
 {% if is_paginated %}
 {% if page_obj.has_previous %}
