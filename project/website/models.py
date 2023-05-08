@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 #  Comments only have a text field
+
+
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_posted = models.DateField(default=timezone.now)
@@ -14,6 +16,8 @@ class Comment(models.Model):
         return self.text
 
 #  Reviews have a title, text and a rating 0-5
+
+
 class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_posted = models.DateField(default=timezone.now)
@@ -28,6 +32,7 @@ class Review(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Post(models.Model):
 
@@ -44,13 +49,17 @@ class Post(models.Model):
     )
     date_posted = models.DateField(default=timezone.now)
     description = models.TextField()
-    ingredients = models.TextField(blank=True)  # only 'recipe' posts will have this
-    instructions = models.TextField(blank=True)  # only 'recipe' posts will have this
+    # only 'recipe' posts will have this
+    ingredients = models.TextField(blank=True)
+    # only 'recipe' posts will have this
+    instructions = models.TextField(blank=True)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank=True, related_name='likes')
-    comments = models.ManyToManyField(Comment, blank=True, related_name='comments')
-    reviews = models.ManyToManyField(Review, blank=True, related_name='reviews')
+    comments = models.ManyToManyField(
+        Comment, blank=True, related_name='comments')
+    reviews = models.ManyToManyField(
+        Review, blank=True, related_name='reviews')
 
     def __str__(self):
         return self.title
@@ -67,7 +76,3 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
-
-
-
-

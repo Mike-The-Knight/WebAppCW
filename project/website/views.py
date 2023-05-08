@@ -1,3 +1,5 @@
+from .serializers import *
+from rest_framework import viewsets
 from typing import Optional
 
 from django.contrib.auth.models import User
@@ -19,8 +21,11 @@ def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
 # list users liked posts
+
+
 def userLikes(request):
     return render(request, 'website/user_likes.html', {'title': 'Your liked posts'})
+
 
 class AddLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
@@ -37,7 +42,6 @@ class AddLike(LoginRequiredMixin, View):
         if already_liked:
             post.likes.remove(request.user)
 
-
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
@@ -52,18 +56,22 @@ class AddComment(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+
 class AddReview(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
-        review = Review(author=request.user, title=request.POST['title'], rating=request.POST['rating'], text=request.POST['text'])
+        review = Review(
+            author=request.user, title=request.POST['title'], rating=request.POST['rating'], text=request.POST['text'])
         review.save()
         post.reviews.add(review)
         post.save()
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
-## Class views for Posts
+# Class views for Posts
 # List views
+
+
 class PostListView(ListView):
     model = Post
     template_name = 'website/home.html'
@@ -109,7 +117,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-    
+
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
@@ -131,9 +139,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 # REST API VIEWS
-
-from rest_framework import viewsets
-from .serializers import *
 
 
 class CommentViewSet(viewsets.ModelViewSet):

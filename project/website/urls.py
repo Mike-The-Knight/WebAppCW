@@ -28,32 +28,31 @@ urlpatterns = [
     # paths for home page and about page
     path('', include('frontend.urls')),
     #path('', views.PostListView.as_view(), name="home"),
-    path('about', views.about, name="about"),
+    #path('about', views.about, name="about"),
 
     # Paths for viewing, updating, creating and deleting posts
     #path('post/<int:pk>/', views.PostDetailView.as_view(), name="post-detail"),
-    path('post/create/', views.PostCreateView.as_view(), name="post-create"),
-    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name="post-update"),
-    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name="post-delete"),
+    # path('post/create/', views.PostCreateView.as_view(), name="post-create"),
+    # path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name="post-update"),
+    # path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name="post-delete"),
 
-    # Paths for viewing posts by a specific user
-    path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
+    # # Paths for viewing posts by a specific user
+    # path('user/<str:username>/', views.UserPostListView.as_view(), name="user-posts"),
 
-    # View all posts liked by a user
-    path('likes', views.userLikes, name="user-likes"),
+    # # View all posts liked by a user
+    # path('likes', views.userLikes, name="user-likes"),
 
-    # like/unlike post
-    path('post/<int:pk>/like', AddLike.as_view(), name='like'),
+    # # like/unlike post
+    # path('post/<int:pk>/like', AddLike.as_view(), name='like'),
 
-    # post new comments
-    path('post/<int:pk>/comment', AddComment.as_view(), name='comment'),
+    # # post new comments
+    # path('post/<int:pk>/comment', AddComment.as_view(), name='comment'),
 
-    # post new reviews
-    path('post/<int:pk>/review', AddReview.as_view(), name='review'),
+    # # post new reviews
+    # path('post/<int:pk>/review', AddReview.as_view(), name='review'),
 
     # REST API ROUTES
     path('api/main/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]
-
-

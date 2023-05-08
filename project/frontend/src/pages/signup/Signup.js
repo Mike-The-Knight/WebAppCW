@@ -16,7 +16,7 @@ export default function Signup() {
       event.preventDefault();
       console.log(formData);
 
-      fetch('members/api/users/', {
+      fetch('members/api/register/', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
@@ -25,11 +25,9 @@ export default function Signup() {
       })
          .then((response) => {
             if (response.ok) {
-               // User was created successfully
                toast.success("User successfully created!")
                navigate('/signin');
             } else {
-               // There was an error creating the user
                toast.error("Error creating user")
                console.error('Error creating user.');
             }

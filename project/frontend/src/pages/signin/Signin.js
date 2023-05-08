@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 export default function Signin() {
    const navigate = useNavigate();
 
-   const [formData, setFormData] = useState({
-      username: '',
-      password: ''
-   });
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
 
-   const handleSubmit = (event) => {
+   const handleSubmit = async (event) => {
       event.preventDefault();
-      console.log(formData);
 
+      const response = await fetch('/members/api/login/', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ username, password }),
+      });
 
-   };
-
-   const handleChange = (event) => {
-      setFormData(values => ({ ...values, [event.target.name]: event.target.value }));
+      const data = await response.json();
+      if (response.ok) {
+         localStorage.setItem('token', data.access);
+         toast.success("Successfully signed in!")
+         navigate('/home');
+      } else {
+         toast.error("Invalid credentials")
+      }
    };
 
    return (
@@ -35,7 +42,8 @@ export default function Signin() {
                      <div class="field ">
                         <label for="" class="label">Username</label>
                         <div class="control">
-                           <input type="username" placeholder="e.g. bobsmith123" class="input" name="username" value={formData.username} onChange={handleChange} required></input>
+                           <input type="username" placeholder="e.g. bobsmith123" class="input" name="username" value={username} onChange={(event) => setUsername(event.target.value)}
+                              required></input>
                         </div>
                      </div>
                   </div>
@@ -45,7 +53,7 @@ export default function Signin() {
                      <div class="field ">
                         <label for="" class="label">Password</label>
                         <div class="control">
-                           <input type="password" placeholder="*******" class="input" name="password" value={formData.password} onChange={handleChange} required></input>
+                           <input type="password" placeholder="*******" class="input" name="password" value={password} onChange={(event) => setPassword(event.target.value)} required></input>
                         </div>
                      </div>
                   </div>
