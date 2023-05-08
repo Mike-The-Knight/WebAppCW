@@ -3,10 +3,10 @@ version: '3.8'
 services:
 
   web:
-    build: .
-    command: python /app/project/manage.py runserver 0.0.0.0:8000
+    build: ./project
+    command: python /app/manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - ./project:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -14,6 +14,23 @@ services:
     environment:
       - DATABASE_HOST=db
 
+  chat:
+    build: ./globalchat
+    command: python /app/manage.py runserver 0.0.0.0:8001
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./globalchat:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+
+  redis:
+    image: "redis:6.2-alpine"
+    ports:
+      - "6379:6379"
+  
   db:
     image: mysql:8.0.33
     environment:

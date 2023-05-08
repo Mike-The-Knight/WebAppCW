@@ -13,4 +13,6 @@ requests==2.29.0
 sqlparse==0.4.3
 tzdata==2022.7
 urllib3==1.26.15
-mysqlclient>=2.0,<3.0
+channels==4.0.0
+daphne==4.0.0
+channels-redis==4.1.0
