@@ -14,4 +14,4 @@ sqlparse==0.4.3
 tzdata==2022.7
 urllib3==1.26.15
 channels==4.0.0
-channels_redis==4.1.0
+daphne==4.0.0

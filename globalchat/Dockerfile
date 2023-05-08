@@ -20,5 +20,3 @@ COPY microservice_chat /app
 
 # Expose the port your Django app runs on
 EXPOSE 8001
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
