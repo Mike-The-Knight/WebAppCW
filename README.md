@@ -14,7 +14,7 @@ This will build the docker locally, you must have Docker Desktop running.
 
 Then create the database:
 ```
-docker-compose run web python project/manage.py migrate
+docker-compose run web python manage.py migrate
 ```
 
 Then run:
