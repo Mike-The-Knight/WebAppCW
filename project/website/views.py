@@ -19,6 +19,9 @@ def home(request):
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
 
+def createpost(request):
+    return render(request, 'website/post_form.html', {'title': 'Create Post'})
+
 # list users liked posts
 def user_likes(request):
     return render(request, 'website/user_likes.html', {'title': 'Your liked posts'})

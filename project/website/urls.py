@@ -37,6 +37,9 @@ urlpatterns = [
     # View all posts by the users the user follows
     path('following', views.user_following, name="user-following"),
 
+    # View all posts by the users the user follows
+    path('posts', views.createpost, name="post_form"),
+
     # View all posts by a particular user using their id
     path('post/user/<int:pk>', views.user_posts_id, name="user-posts-id"),
 
