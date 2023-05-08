@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='http://127.0.0.1:8000/members/account/signin')
-def chat_room(request):
-    return render(request, 'chat/chat_room.html')
+def room(request, room_name):
+    return render(request, "chat/room.html", {"room_name": room_name})
 
+def index(request):
+    return render(request, "chat/index.html")

@@ -16,7 +16,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project files
-COPY . /app
+COPY microservice_chat /app
 
 # Expose the port your Django app runs on
 EXPOSE 8001
