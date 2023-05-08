@@ -16,6 +16,14 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
+    <style>
+        .card:hover {
+            background-color: #f5f5f5;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    </style>
+
     <!-- font awesome for icons, uses installed app -->
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
@@ -98,16 +106,8 @@
         </div>
 
     </main>
-    {% if not user.is_authenticated %}
-    <div class="section">
-        <section class="hero">
-            <div class="hero-body">
-                <p class="title is-1 has-text-centered">Welcome to Meal Mate!</p>
-                <p class="subtitle has-text-centered is-size-5 mb-1 mt-1">See what our users are posting</p>
-            </div>
-        </section>
+
     </div>
-    {% endif %}
     {% block content %}
     {% endblock %}
     <script src="" async defer></script>
