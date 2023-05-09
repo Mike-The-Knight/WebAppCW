@@ -1,6 +1,13 @@
 # WebAppCW
 Group 18 - Web App coursework
 
+## How to clone the repository
+Once in the folder you wish to clone into, simply run
+
+```
+git clone (click clone repository in the 'main' repository and paste it in)
+```
+Under the big 'Code' button is where you will be able to clone the repository
 
 # Docker
 ## Docker commands to run
