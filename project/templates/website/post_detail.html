@@ -96,17 +96,20 @@
             <hr>
             {% endfor %}
             {% if user.is_authenticated %}
-            <form method="POST" action="{% url 'comment' post.pk %}">
+            <form method="POST" action="{% url 'comment' post.pk %}" class="has-text-centered">
                 {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <div class="columns has-text-centered">
-                    <div class="column is-11">
-                        <input type="text" name="text" placeholder="Add comment" class="input is-rounded">
-                    </div>
-                    <div class="column is-1">
-                        <button class="button is-fullwidth is-rounded" type="submit">
-                            <strong>Post</strong>
-                        </button>
+                <h2><strong>Add Comment</strong></h2>
+                <div class="mt-6 mr-5 ml-5">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <div class="columns has-text-centered">
+                        <div class="column is-11">
+                            <input type="text" name="text" placeholder="Add comment" class="input is-rounded">
+                        </div>
+                        <div class="column is-1">
+                            <button class="button is-fullwidth is-rounded" type="submit">
+                                <strong>Post</strong>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -136,38 +139,40 @@
             {% endfor %}
 
             {% if user.is_authenticated %}
-            <h4> Add review: </h4>
             <!-- post new review -->
-            <form method="POST" action="{% url 'review' post.pk %}">
+            <form method="POST" action="{% url 'review' post.pk %}" class="has-text-centered">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
-                <div class="row">
-                    <label for="title">Title</label>
-                    <br>
-                    <input class="input" type="text" id="title" name="title">
+                <h2><strong>Add Review</strong></h2>
+
+                <div class="columns has-text-centered mt-2">
+                    <div class="column is-2">
+                        <input class="input is-rounded" type="text" placeholder="Title" id="title" name="title">
+                    </div>
+                    <div class="column is-7">
+                        <input class="input is-rounded" placeholder="Text" type="text" id="text" name="text">
+                    </div>
+                    <div class="column is-2">
+                        <input style="width: 100%;" type="range" id="rating" name="rating" min="0" max="5">
+                    </div>
+                    <div class="column is-1">
+                        <button class="button is-fullwidth is-rounded" type="submit">
+                            <strong>Post</strong>
+                        </button>
+                    </div>
+
                 </div>
-                <div class="row">
-                    <label for="title">Text</label>
-                    <br>
-                    <input class="input" type="text" id="text" name="text">
-                </div>
-                <div class="row">
-                    <label for="title">Rating</label>
-                    <br>
-                    <input type="range" id="rating" name="rating" min="0" max="5">
-                </div>
-                <div class="row">
-                    <button type="submit">
-                        Post review
-                    </button>
-                </div>
-            </form>
-            {% else %}
-            <p>Sign in to post reviews</p>
-            {% endif %}
-            <br>
+
+
+
         </div>
-        {%endif%}
+        </form>
+        {% else %}
+        <p>Sign in to post reviews</p>
+        {% endif %}
+        <br>
     </div>
+    {%endif%}
+</div>
 </div>
 {% endblock %}
