@@ -1,17 +1,92 @@
 {% extends "website/base.html" %}
 {% block content %}
+<section class="hero">
+  <div class="hero-body">
+    <p class="title is-1 has-text-centered">Create New Post</p>
+  </div>
+</section>
 
-<h2>Create post</h2>
-<div class="content-section">
-  <form method="POST">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Post Information</legend>
-      {{ form.as_p }}
-    </fieldset>
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">Post</button>
+{% if form.errors %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="notification is-danger">
+        <ul>
+          {% for field_errors in form.errors.values %}
+          {% for error in field_errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </form>
-</div>
-{% endblock %}
+  </div>
+</main>
+{% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+  {% csrf_token %}
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="field ">
+          <label for="" class="label">Title</label>
+          <div class="control">
+            {{ form.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="field ">
+          <label for="" class="label">Type</label>
+          <div class="control">
+            {{ form.type }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="field ">
+          <label for="" class="label">Description</label>
+          <div class="control">
+            {{ form.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="field ">
+          <label for="" class="label">Ingredients</label>
+          <div class="control">
+            {{ form.ingredients }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="field ">
+          <label for="" class="label">Instructions</label>
+          <div class="control">
+            {{ form.instructions }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-2">
+        <div class="actions has-text-centered">
+          <button type="submit" class="button is-danger is-fullwidth">
+            Create Post
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

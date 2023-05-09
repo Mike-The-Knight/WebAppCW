@@ -10,20 +10,25 @@ from .models import Post, Comment, Review
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'type', 'description', 'ingredients', 'instructions']
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['title'].widget.attrs.update({'class': 'input', 'placeholder':"e.g. Ribeye steak"})
+        form.fields['type'].widget.attrs.update({'class': 'input'})
+        form.fields['description'].widget.attrs.update({'class': 'input'})
+        form.fields['ingredients'].widget.attrs.update({'class': 'input'})
+        form.fields['instructions'].widget.attrs.update({'class': 'input'})
+        return form
 
 # Create your views here.
 def home(request):
     return render(request, 'website/home.html', {'title': 'Home'})
 
-
 def about(request):
     return render(request, 'website/about.html', {'title': 'About'})
-
-def allposts(request):
-    return render(request, 'website/post_detail.html', {'title': 'Posts'})
-
-def createpost(request):
-    return render(request, 'website/post_form.html', {'title': 'Create Post'})
 
 # list users liked posts
 def user_likes(request):
@@ -112,7 +117,7 @@ class PostDetailView(DetailView):
 
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, PostCreateView):
     login_url = '/members/account/signin/'
 
     model = Post
