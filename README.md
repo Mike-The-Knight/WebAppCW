@@ -28,7 +28,7 @@ Then run:
 ```
 docker-compose up
 ```
-This will start the app on your local host.
+This will start the app on your local host at port 8000!
 
 # Testing
 ## To run tests
