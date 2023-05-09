@@ -66,11 +66,14 @@
                 <div class="navbar-item">
                     {% if user.is_authenticated %}
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            <strong>Account</strong>
-                        </a>
+                        <a class="navbar-link" style="display: flex; align-items: center;">
+                            <img src="{{ user.profile.image.url }}" alt="Account" style="margin-left: 5px; width: 20px; height: 20px;" />
+                          </a>
 
                         <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{% url 'account' %}">
+                                Profile
+                            </a>
                             <a class="navbar-item" href="{% url 'user-posts' user.username %}">
                                 Posts
                             </a>
