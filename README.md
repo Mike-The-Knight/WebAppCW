@@ -6,7 +6,6 @@ Once in the folder you wish to clone into, simply run
 
 ```
 git clone (click clone repository in the 'main' repository and paste it in)
-
 ```
 
 # Docker
