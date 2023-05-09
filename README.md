@@ -22,3 +22,13 @@ Then run:
 docker-compose up
 ```
 This will start the app on your local host.
+
+# Testing
+## To run tests
+Run the following to test:
+
+```
+docker-compose run web python manage.py test chat
+
+docker-compose run web python manage.py test members
+```
