@@ -1,84 +1,140 @@
 {% extends "website/base.html" %}
 {% block content %}
 
-<h2>Meal</h2>
-
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a href="/members/{{post.author.id}}" class="mr-2">{{ object.author }}</a>
-            <small class="text-muted">{{ object.date_posted | date:"F d Y" }}</small>
+<div class="card mb-6 shadow-md">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                    <img src="{{ post.author.profile.image.url }}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-3">
+                    {% if post.type == 'MEAL' %}
+                    <small><i class="fa-solid fa-utensils mr-2"></i></small>
+                    {% elif post.type == 'RECIPE' %}
+                    <small><i class="fa-solid fa-kitchen-set mr-2"></i></small>
+                    {% endif %}
+                    {{post.title}}
+                </p>
+                <p class="subtitle is-6">
+                    <a href="/members/{{post.author.id}}">
+                        @{{post.author.username}}
+                    </a>
+                </p>
+            </div>
         </div>
-        <h2 class="article-title">{{ object.title }}</h2>
-        {% if object.type == 'MEAL' %}
-        <h3>Description:</h3>
-        <p class="article-content">{{ object.description }}</p>
-        {% elif object.type == 'RECIPE' %}
-        <h3>Description:</h3>
-        <p class="article-content">{{ object.description }}</p>
-        <h3>Ingredients:</h3>
-        <p class="article-content">{{ object.ingredients }}</p>
-        <h3>Instructions:</h3>
-        <p class="article-content">{{ object.instructions }}</p>
-        {% endif %}
 
-        <!-- Likes -->
-        {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'like' post.pk %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
+        <div class="content">
+            <div class="mb-5">
+                {{post.description}}
+            </div>
+            {% if post.ingredients %}
+            <div>
+                <div class="has-text-grey-dark has-text-weight-bold mb-2">
+                    Ingredients
+                </div>
+                <p class="mb-4">{{post.ingredients}}</p>
+            </div>
+            {% endif %}
+            {% if post.instructions %}
+            <div>
+                <div class="has-text-grey-dark has-text-weight-bold mb-2">
+                    Method
+                </div>
+                <p>{{post.instructions}}</p>
+            </div>
+            {% endif %}
+        </div>
 
-            <!-- like button is made blue if the user has liked the post -->
-            {% for like in post.likes.all %}
-            {% if like == request.user %}
-            <style>
-                i {
-                    color: blue;
-                }
-            </style>
-            {%endif%}
-            {%endfor%}
+        <div class="field-group">
+            <div class="field is-inline-block-desktop mr-2">
+                <time datetime="2016-1-1">{{post.date_posted}} •</time>
+            </div>
 
-            <button type="submit">
-                <i class="fa-solid fa-thumbs-up"></i>
+            <div class="field is-inline-block-desktop mr-2">
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'like' post.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+
+                    {% for like in post.likes.all %}
+                    {% if like == request.user %}
+                    <style>
+                        .fa-thumbs-up {
+                            color: blue;
+                        }
+                    </style>
+                    {%endif%}
+                    {%endfor%}
+                    <button type="submit" style="background:none; border: none; cursor: pointer;">
+                        <i type="submit" class="fa-solid fa-thumbs-up"></i>
+                    </button>
+                    {{ post.likes.all.count }}
+                </form>
+                {% else %}
+                <i type="submit" class="fa-solid fa-thumbs-up"></i>
                 {{ post.likes.all.count }}
-            </button>
-        </form>
-        {% else %}
-        <p><i class="fa-solid fa-thumbs-up"></i> {{ post.likes.all.count }}</p>
-        <p>Sign in to like posts</p>
-        {% endif %}
+                {% endif %}
+            </div>
+            <div class="field is-inline-block-desktop">
+                <i class="fas fa-comment"></i>
+                {{post.comments.count}}
+            </div>
+        </div>
+        <hr>
+        <div class="comments mt-4">
+            <h3><strong>Comments ({{ post.comments.count }})</strong></h3>
 
-        <!-- Comments -->
-        <div class="comments">
-            <h3>Comments ({{ post.comments.count }})</h3>
+            {% for comment in post.comments.all %}
+            <div class="comment mt-4">
+                <small><a href="/members/{{comment.author.id}}">{{ comment.author }}</a> | {{ comment.date_posted }}
+                </small>
+                <p> {{ comment }} </p>
+            </div>
+            <hr>
+            {% endfor %}
             {% if user.is_authenticated %}
-            <h4> Add comment: </h4>
             <form method="POST" action="{% url 'comment' post.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
-                <input type="text" name="text">
-                <button type="submit">
-                    Post comment
-                </button>
+                <div class="columns has-text-centered">
+                    <div class="column is-11">
+                        <input type="text" name="text" placeholder="Add comment" class="input is-rounded">
+                    </div>
+                    <div class="column is-1">
+                        <button class="button is-fullwidth is-rounded" type="submit">
+                            <strong>Post</strong>
+                        </button>
+                    </div>
+                </div>
             </form>
             {% else %}
             <p>Sign in to post comments</p>
             {% endif %}
             <br>
-            {% for comment in post.comments.all %}
-            <div class="comment">
-                <small><a href="/members/{{comment.author.id}}">{{ comment.author }}</a> | {{ comment.date_posted }}
-                </small>
-                <p> {{ comment }} </p>
-            </div>
-            {% endfor %}
+            <hr>
         </div>
 
         <!-- Reviews if recipe -->
         {% if object.type == "RECIPE" %}
         <div class="reviews">
-            <h3>Reviews ({{ object.reviews.count }})</h3>
+            <h3><strong>Reviews ({{ object.reviews.count }})</strong></h3>
+
+
+            <!-- display reviews -->
+            {% for review in post.reviews.all %}
+            <div class="review mt-4">
+                <strong> {{ review.title }} </strong>
+                <small><a href="/members/{{review.author.id}}">{{ review.author }}</a> | {{ review.date_posted }}
+                </small>
+                <p> {{ review.rating }}/5 stars</p>
+                <p> {{ review.text }} </p>
+            </div>
+            <hr>
+            {% endfor %}
+
             {% if user.is_authenticated %}
             <h4> Add review: </h4>
             <!-- post new review -->
@@ -88,12 +144,12 @@
                 <div class="row">
                     <label for="title">Title</label>
                     <br>
-                    <input type="text" id="title" name="title">
+                    <input class="input" type="text" id="title" name="title">
                 </div>
                 <div class="row">
                     <label for="title">Text</label>
                     <br>
-                    <input type="text" id="text" name="text">
+                    <input class="input" type="text" id="text" name="text">
                 </div>
                 <div class="row">
                     <label for="title">Rating</label>
@@ -110,20 +166,8 @@
             <p>Sign in to post reviews</p>
             {% endif %}
             <br>
-
-            <!-- display reviews -->
-            {% for review in post.reviews.all %}
-            <div class="review">
-                <strong> {{ review.title }} </strong>
-                <small><a href="/members/{{review.author.id}}">{{ review.author }}</a> | {{ review.date_posted }}
-                </small>
-                <p> {{ review.rating }}/5 stars</p>
-                <p> {{ review.text }} </p>
-            </div>
-            {% endfor %}
         </div>
         {%endif%}
-
     </div>
-</article>
+</div>
 {% endblock %}
