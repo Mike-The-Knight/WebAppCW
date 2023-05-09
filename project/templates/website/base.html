@@ -39,23 +39,29 @@
             </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div id="navbarBasicExample" class="navbar-menu d-flex justify-content-between">
             <div class="navbar-start">
-                <a class="navbar-item" href="/">
-                    Home
-                </a>
-                {% if user.is_authenticated %}
-                <a class=" navbar-item" href="{% url 'user-following' %}">
-                    Following
-                </a>
-                <a class=" navbar-item" href="{% url 'post_form' %}">
-                    Create Post
-                </a>
-                {% endif %}
-                <a class=" navbar-item" href="/about">
-                    About Us
-                </a>
+              <a class="navbar-item" href="/">
+                Home
+              </a>
+              <a class="navbar-item" href="/about">
+                About Us
+              </a>
+              {% if user.is_authenticated %}
+              <a class="navbar-item" href="{% url 'user-following' %}">
+                Following
+              </a>
+              {% endif %}
             </div>
+            {% if user.is_authenticated %}
+            <div class="navbar-end">
+                <a class="navbar-item" href="{% url 'post_form' %}" style="font-size: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg" alt="Create Post" style="margin-right: 5px;" />
+                    Create Post
+                  </a>
+            </div>
+            {% endif %}
+          </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     {% if user.is_authenticated %}
