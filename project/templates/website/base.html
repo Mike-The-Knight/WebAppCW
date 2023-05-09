@@ -41,69 +41,69 @@
 
         <div id="navbarBasicExample" class="navbar-menu d-flex justify-content-between">
             <div class="navbar-start">
-              <a class="navbar-item" href="/">
-                Home
-              </a>
-              <a class="navbar-item" href="/about">
-                About Us
-              </a>
-              <a class="navbar-item" href="{% url 'allposts' %}">
-                Posts
-              </a>
-              {% if user.is_authenticated %}
-              <a class="navbar-item" href="{% url 'user-following' %}">
-                Following
-              </a>
-              {% endif %}
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <a class="navbar-item" href="/about">
+                    About Us
+                </a>
+                {% if user.is_authenticated %}
+                <a class="navbar-item" href="{% url 'user-following' %}">
+                    Following
+                </a>
+                {% endif %}
             </div>
             {% if user.is_authenticated %}
             <div class="navbar-end">
-                <a class="navbar-item" href="{% url 'post_form' %}" style="font-size: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg" alt="Create Post" style="margin-right: 5px;" />
+                <a class="navbar-item" href="{% url 'post_form' %}"
+                    style="font-size: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg" alt="Create Post"
+                        style="margin-right: 5px;" />
                     Create Post
-                  </a>
+                </a>
             </div>
             {% endif %}
-          </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    {% if user.is_authenticated %}
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" style="display: flex; align-items: center;">
-                            <img src="{{ user.profile.image.url }}" alt="Account" class="rounded-circle" style="margin-left: 5px; width: 20px; height: 20px;" />
-                          </a>                          
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                {% if user.is_authenticated %}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" style="display: flex; align-items: center;">
+                        <img src="{{ user.profile.image.url }}" alt="Account" class="rounded-circle"
+                            style="margin-left: 5px; width: 20px; height: 20px;" />
+                    </a>
 
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{% url 'account' %}">
-                                Profile
-                            </a>
-                            <a class="navbar-item" href="{% url 'user-posts' user.username %}">
-                                Posts
-                            </a>
-                            <a class=" navbar-item" href="{% url 'user-likes' %}">
-                                Likes
-                            </a>
-                            <a class="navbar-item" href="/members/account>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="{% url 'account' %}">
+                            Profile
+                        </a>
+                        <a class="navbar-item" href="{% url 'user-posts' user.username %}">
+                            Posts
+                        </a>
+                        <a class=" navbar-item" href="{% url 'user-likes' %}">
+                            Likes
+                        </a>
+                        <a class="navbar-item" href="/members/account>
                                 View Account
                             </a>
                             <hr class=" navbar-divider">
-                                <a class="navbar-item" href="/members/account/signout">
-                                    <strong>Sign out</strong>
-                                </a>
-                        </div>
+                            <a class="navbar-item" href="/members/account/signout">
+                                <strong>Sign out</strong>
+                            </a>
                     </div>
-                    {% else %}
-                    <div class="buttons">
-                        <a class="button is-danger" href="/members/account/signup">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light" href="/members/account/signin">
-                            Log in
-                        </a>
-                    </div>
-                    {% endif %}
                 </div>
+                {% else %}
+                <div class="buttons">
+                    <a class="button is-danger" href="/members/account/signup">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light" href="/members/account/signin">
+                        Log in
+                    </a>
+                </div>
+                {% endif %}
             </div>
+        </div>
         </div>
     </nav>
     <main role="main" class="container">
