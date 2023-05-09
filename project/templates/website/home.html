@@ -8,18 +8,25 @@
         <p class="subtitle has-text-centered is-size-5 mb-1 mt-1">See what our users are posting</p>
     </div>
 </section>
+{% else %}
+<section class="hero has-text-centered">
+    <div class="hero-body">
+        <p class="title">
+            Home
+        </p>
+    </div>
+</section>
 {% endif %}
 
-<div class="section">
-    <div class="columns is-centered">
-        <div class="column is-7">
-            {% for post in posts %}
-            {% include './feed.html' %}
+<div class="columns is-centered">
+    <div class="column is-7">
+        {% for post in posts %}
+        {% include './feed.html' %}
 
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
 </div>
+
 {% if is_paginated %}
 {% if page_obj.has_previous %}
 <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
