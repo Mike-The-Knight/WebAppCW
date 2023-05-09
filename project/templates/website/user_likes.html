@@ -1,68 +1,39 @@
 {% extends "website/base.html" %}
 {% block content %}
-    <h2> My liked posts </h2>
+<section class="hero has-text-centered">
+    <div class="hero-body">
+        <p class="title">
+            Liked Posts
+        </p>
+    </div>
+</section>
 
-    {% for post in request.user.likes.all %}
-    <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-        <div class="media-body">
-            <div class="article-metadata">
-                <a href="/members/{{post.author.id}}" class="mr-2">{{ post.author }}</a>
-                <small class="text-muted">{{ post.date_posted | date:"F d Y" }}</small>
-            </div>
-            <!-- meal/recipe icon display -->
-            {% if post.type == 'MEAL' %}
-                <small><i class="fa-solid fa-utensils"></i> Meal</small>
-            {% elif post.type == 'RECIPE' %}
-                <small><i class="fa-solid fa-kitchen-set"></i> Recipe</small>
-            {% endif %}
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            {% if post.type == 'MEAL' %}
-                <h3>Description:</h3>
-                <p class="article-content">{{ post.description }}</p>
-            {% elif post.type == 'RECIPE' %}
-                <h3>Description:</h3>
-                <p class="article-content">{{ post.description }}</p>
-                <h3>Ingredients:</h3>
-                <p class="article-content">{{ post.ingredients }}</p>
-                <h3>Instructions:</h3>
-                <p class="article-content">{{ post.instructions }}</p>
-            {% endif %}
-            <!-- Display Likes, comments and reviews -->
-            <div class="article-metadata">
-                {% for key, value in like_numbers.items %}
-                    {% if key == post.id %}
-                        <a class="mr-2">Likes: {{ value }} </a>
-                    {% endif %}
-                {% endfor %}
-                <a class="mr-2">Likes: {{ post.likes.count }}</a>
-                <a class="mr-2">Comments: {{ post.comments.count }}</a>
-                {% if post.type == 'RECIPE' %}
-                    <a class="mr-2">Reviews: {{ post.reviews.count }}</a>
-                {% endif %}
-            </div>
-            
-        </div>
-    </article>
-{% endfor %}
+<div class="columns is-centered">
+    <div class="column is-7">
+        {% for post in request.user.likes.all %}
+        {% include './feed.html' %}
+
+        {% endfor %}
+    </div>
+</div>
 {% if is_paginated %}
-    {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
+{% if page_obj.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
 
-    {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-            <a class="btn btn-info mb-4" href="?page={{ num }}">{{num}}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{num}}</a>
-        {% endif %}
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a class="btn btn-info mb-4" href="?page={{ num }}">{{num}}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+    href="?page={{ num }}">{{num}}</a>
+    {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-{% endblock %}
+    {% endblock %}
